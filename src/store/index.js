@@ -60,7 +60,7 @@ export default new Vuex.Store({
     },
     actions: {
         signIn: ({commit, dispatch, getters}, bodyFormData)=>{
-            console.log(bodyFormData.get('Users[username]'));
+            console.log(bodyFormData);
             return  axios({
                     method: 'post',
                     url: '/auth/sign-in',

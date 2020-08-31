@@ -93,10 +93,10 @@
 					АВТОРИЗАЦИЯ
 				</h2>
 				<form name="login" id="login" action="#" method="post" class="r-flex">
-					<input type="text" name="username" placeholder="ЛОГИН(№ участка)"/>
-					<input type="password" name="username" placeholder="ПАРОЛЬ"/>
+					<input type="text" name="username" placeholder="ЛОГИН(№ участка)" v-model="username"/>
+					<input type="password" name="username" placeholder="ПАРОЛЬ" v-model="password"/>
 					<div class="login_controls r-flex">
-						<input type="submit" name="submit" value="вход"></input>
+						<input type="submit" name="submit" value="вход" @click.prevent="signIn"></input>
 						<input type="button" name="cancel" value="отмена" @click.prevent="showModal=!showModal"></input>
 					</div>
 				</form>
@@ -121,22 +121,39 @@
             isLogined: false,
 			showModal: false,
 			modal: 'modal',
-			login: 'login_active'
-
+			login: 'login_active',
+			username: '',
+			password: '',
         }),
 
         methods: {
             logout(){
               this.$store.dispatch('logout')
                   .then(()=>{
-                      this.$router.push('/sign-in')
+                      this.$router.push('/')
                   })
             },
             signIn(){
-                this.$router.push({name: 'signin'})
+                    let bodyFormData = new FormData();
+                    bodyFormData.set('username', this.username);
+                    bodyFormData.set('password', this.password);
+					//console.log('dfasfddsa', bodyFormData.get('username'));
+                    this.$store.dispatch('signIn', bodyFormData)
+                        .then(()=>{
+                        // console.log(this.$store.getters.authStatus);
+                        if(this.$store.getters.authStatus === 'success'){
+                            this.error = false;
+                            this.$router.push('/')
+                        }else if(this.$store.getters.authStatus === 'error'){
+                            this.error = true;
+                            this.msg = this.$store.getters.getErrorMsg;
+                            // console.log(this)
+                        }
+                        })
+                        .catch();
             },
             signUp(){
-                this.$router.push({name: 'signup'})
+                
             }
 
         },
