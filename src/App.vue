@@ -134,16 +134,18 @@
                   })
             },
             signIn(){
-                    let bodyFormData = new FormData();
-                    bodyFormData.set('username', this.username);
-                    bodyFormData.set('password', this.password);
+                   // let bodyFormData = new FormData();
+                   // bodyFormData.set('username', this.username);
+                   // bodyFormData.set('password', this.password);
 					//console.log('dfasfddsa', bodyFormData.get('username'));
-                    this.$store.dispatch('signIn', bodyFormData)
+                    this.$store.dispatch('signIn', {username: this.username, password: this.password})
                         .then(()=>{
                         // console.log(this.$store.getters.authStatus);
                         if(this.$store.getters.authStatus === 'success'){
                             this.error = false;
-                            this.$router.push('/')
+                            //this.$router.push('/')
+							this.showModal = false;
+							this.isLogined = true;
                         }else if(this.$store.getters.authStatus === 'error'){
                             this.error = true;
                             this.msg = this.$store.getters.getErrorMsg;
@@ -160,7 +162,8 @@
         computed: {
         },
         mounted() {
-			//console.log(this.$store.getters.isAuthenticated);
+			console.log(this.$store.getters.isAuthenticated);
+			this.isLogined = this.$store.getters.isAuthenticated;
         }
 
     };

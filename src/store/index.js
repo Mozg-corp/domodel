@@ -14,11 +14,9 @@ export default new Vuex.Store({
         username: localStorage.getItem('user-username') || '',
     },
     getters: {
-        // isAuthenticated: state => true,
         isAuthenticated: state => !!state.token,
         authStatus: state => state.status,
         getErrorMsg: state => state.errorMsg,
-        // isAdmin: state => true,
         isAdmin: state => state.admin,
         getToken: state => `Bearer ${state.token}`,
         getUsername: state => state.username,
@@ -30,10 +28,6 @@ export default new Vuex.Store({
         },
 
         AUTH_SUCCESS: (state, {token, isAdmin, username}) => {
-            // console.log('success');
-            // console.log(isAdmin);
-            // console.log(token);
-            // console.log(username);
             state.admin = isAdmin;
             state.status = 'success';
             state.token = token;
@@ -59,48 +53,45 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        signIn: ({commit, dispatch, getters}, bodyFormData)=>{
-            console.log(bodyFormData);
+        signIn: ({commit, dispatch, getters}, body)=>{
             return  axios({
                     method: 'post',
-                    url: '/auth/sign-in',
-                    data: bodyFormData,
-                    headers: {'Content-Type': 'multipart/form-data' }
-                    // }).then(response => console.log(response.data))
+                    url: '/api/v1/auth/login',
+                    data: body,
+                    // headers: {'Content-Type': 'multipart/form-data' }
+                    headers: {'Content-Type': 'Application/json' }
                 }).then(response => {
-                    console.log(response);
+                    // console.log(response);
                     if (response.data !== ''){
-                        // let data = response.data;
-                        let data = JSON.parse(response.data);
-                        console.log(data.status);
-                        if(data.status === 'OK'){
-                            // console.log(data);
+                        // let data = JSON.parse(response.data);
+                        let data = response.data;
+                        // console.log('data', data);
+                        // if(data.status === 'OK'){
                             let token = data.token,
                                 isAdmin = data.admin,
-                                username = bodyFormData.get('Users[username]');
-                            // console.log(isAdmin);
-                            // console.log(token);
+                                username = data.username;
                             localStorage.setItem('user-token', token); // store the token in localstorage
                             localStorage.setItem('user-isAdmin', isAdmin);
                             localStorage.setItem('user-username', username);
-                            console.log(axios.defaults.headers.common);
+                            // console.log(axios.defaults.headers.common);
                             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                             commit('AUTH_SUCCESS', {token, isAdmin, username});
-                            // this.error = false;
-                            // this.$router.push('/').then();
 
-                        }else if(data.status === 'deny'){
-                            console.log(data.msg);
-                            let msg = data.msg;
-                            // this.error = true;
-                            commit('AUTH_ERROR', msg);
-                            localStorage.removeItem('user-token'); // if the request fails, remove any possible user token if possible
-                            localStorage.removeItem('user-isAdmin');
-                            localStorage.removeItem('user-username');
-                        }
+                        // }else if(data.status === 'deny'){
+                            // console.log(data.msg);
+                            // let msg = data.msg;
+                            // commit('AUTH_ERROR', msg);
+                            // localStorage.removeItem('user-token'); // if the request fails, remove any possible user token if possible
+                            // localStorage.removeItem('user-isAdmin');
+                            // localStorage.removeItem('user-username');
+                        // }
                     }
                 }).catch(e =>{
-                    console.log(e.message);
+                    console.log(e);
+					commit('AUTH_ERROR', ',eh ,eh');
+					localStorage.removeItem('user-token'); // if the request fails, remove any possible user token if possible
+					localStorage.removeItem('user-isAdmin');
+					localStorage.removeItem('user-username');
                 });
         },
         logout({commit, dispatch}) {
