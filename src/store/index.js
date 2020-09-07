@@ -12,14 +12,16 @@ export default new Vuex.Store({
         errorMsg: '',
         admin: localStorage.getItem('user-isAdmin') || false,
         username: localStorage.getItem('user-username') || '',
+		profile: '',
     },
     getters: {
         isAuthenticated: state => !!state.token,
         authStatus: state => state.status,
         getErrorMsg: state => state.errorMsg,
         isAdmin: state => state.admin,
-        getToken: state => `Bearer ${state.token}`,
+        getToken: state => `Bearer_${state.token}`,
         getUsername: state => state.username,
+		getProfile: state => state.profile,
     },
     mutations: {
         AUTH_REQUEST: (state) => {
@@ -51,9 +53,16 @@ export default new Vuex.Store({
             state.admin = false;
 
         },
+		SET_PROFILE: (state, profile) => {
+			state.profile = profile
+		},
+		SET_USER: (state, user) => {
+			state.profile.user = user
+		}
     },
     actions: {
         signIn: ({commit, dispatch, getters}, body)=>{
+			dispatch('logout');
             return  axios({
                     method: 'post',
                     url: '/api/v1/auth/login',
@@ -73,8 +82,8 @@ export default new Vuex.Store({
                             localStorage.setItem('user-token', token); // store the token in localstorage
                             localStorage.setItem('user-isAdmin', isAdmin);
                             localStorage.setItem('user-username', username);
-                            // console.log(axios.defaults.headers.common);
-                            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                            // console.log(`Bearer_${token}`);
+                            axios.defaults.headers.common['Authorization'] = `Bearer_${token}`;
                             commit('AUTH_SUCCESS', {token, isAdmin, username});
 
                         // }else if(data.status === 'deny'){
@@ -104,7 +113,41 @@ export default new Vuex.Store({
                 delete axios.defaults.headers.common['Authorization'];
                 resolve()
             })
-        }
+        },
+		fetchProfile: ({commit, dispatch,getters}) => {
+			return new Promise(
+				async (resolve, reject) => {
+					// console.log(`${getters.getToken}`);
+					// axios.defaults.headers.common['Authorization']=''
+					let response =  await axios({
+						method: 'get',
+						url: '/api/v1/profile',
+						headers: {
+							'Content-Type': 'Application/json',
+							// 'Authorization': `${getters.getToken}`
+						}
+					})
+					let profile = response.data;
+					commit('SET_PROFILE', profile);
+					resolve(profile);
+				}
+			)
+		},
+		updateProfile: ({commit, dispatch, getters}, newUserData) => {
+			return new Promise(
+				async (resolve, rejected) => {
+					let response = await axios ({
+						method: 'post',
+						url: 'https://localhost:8081/api/v1/profile/update',
+						data: newUserData
+					});
+					
+					let updatedUserData= response.data;
+					commit('SET_USER', updatedUserData);
+					resolve(getters.getProfile);
+				}
+			);
+		}
     },
     modules: {}
 });

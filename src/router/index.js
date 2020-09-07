@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Post from '../components/Post.vue'
+import Profile from '../views/Profile.vue'
 import Shops from '../components/Shops.vue'
 import ShopAdd from '../components/ShopAdd.vue'
 import Map from "../views/Map";
@@ -25,7 +25,7 @@ const ifAuthenticated = (to, from, next) => {
         next();
         return
     }
-    next('/sign-in');
+    next('/');
 };
 
 const routes = [
@@ -35,10 +35,11 @@ const routes = [
         component: Home
     },
     {
-        path: '/post',
-        name:'post',
-        component: Post,
-        props: true
+        path: '/profile',
+        name:'profile',
+        component: Profile,
+        props: true,
+		// beforeEnter: ifAuthenticated
     },
     {
         path: '/chains',

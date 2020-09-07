@@ -2,7 +2,7 @@
   <div class="wrapper">
 		<div class="top">
 		<header>
-			<div class="container r-flex">
+			<div class="container_my r-flex">
 				<div class="header_left">
 					<p class="logo_text">
 						СНТ “ЛУЧ”
@@ -23,7 +23,7 @@
 					</a>
 				</div>
 				<div class="header_center r-flex">
-					<nav id="nav-menu-container">
+					<nav id="nav-menu-container_my">
 						<ul class="menu r-flex">
 							<a href="index.html">
 								<li >
@@ -72,10 +72,10 @@
 					</div>
 					<div v-show="isLogined" class="logged">
 						<p>
-							Иван Петров
+							{{username}}
 						</p>
 						<a href="#">
-							личный кабинет
+							выход
 						</a>
 					</div>
 				</div>
@@ -104,7 +104,7 @@
 		</div>
 		</div> <!--top-->
 		<footer>
-			<div class="container">
+			<div class="container_my_my">
 				
 			</div>
 		</footer> <!--footer-->
@@ -134,23 +134,18 @@
                   })
             },
             signIn(){
-                   // let bodyFormData = new FormData();
-                   // bodyFormData.set('username', this.username);
-                   // bodyFormData.set('password', this.password);
-					//console.log('dfasfddsa', bodyFormData.get('username'));
                     this.$store.dispatch('signIn', {username: this.username, password: this.password})
                         .then(()=>{
-                        // console.log(this.$store.getters.authStatus);
-                        if(this.$store.getters.authStatus === 'success'){
-                            this.error = false;
-                            //this.$router.push('/')
-							this.showModal = false;
-							this.isLogined = true;
-                        }else if(this.$store.getters.authStatus === 'error'){
-                            this.error = true;
-                            this.msg = this.$store.getters.getErrorMsg;
-                            // console.log(this)
-                        }
+							if(this.$store.getters.authStatus === 'success'){
+								this.error = false;
+								//this.$router.push('/')
+								this.showModal = false;
+								this.isLogined = true;
+							}else if(this.$store.getters.authStatus === 'error'){
+								this.error = true;
+								this.msg = this.$store.getters.getErrorMsg;
+								// console.log(this)
+							}
                         })
                         .catch();
             },
@@ -162,9 +157,12 @@
         computed: {
         },
         mounted() {
-			console.log(this.$store.getters.isAuthenticated);
+			this.username = this.$store.getters.getUsername;
 			this.isLogined = this.$store.getters.isAuthenticated;
-        }
+        },
+		updated(){
+		
+		}
 
     };
 </script>
