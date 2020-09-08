@@ -21,7 +21,7 @@
 										{{profile.user.lastName}}
 									</p>
 									<p class="cabinet_phone">
-										{{profile.user.username}}
+										{{profile.user.phoneNumber}}
 									</p>
 								</div>
 							</div>
@@ -41,7 +41,7 @@
 						<div class="profile_top_left">
 							<img src="" alt="avatar" />
 							<h2>
-								{{profile.user.firstName}} {{profile.user.lastName}}
+								{{profile.user.firstName? profile.user.firstName : ""}} {{profile.user.lastName? profile.user.lastName : ""}}
 							</h2>
 						</div>
 						<aside class="">
@@ -53,15 +53,15 @@
 							<i class="fas fa-pencil-alt"></i>
 							Фамилия и Имя
 						</a>
-						<a href="#">
+						<a href="#" @click.prevent="Phone_show=!Phone_show">
 							<i class="fas fa-pencil-alt"></i>
 							Телефон
 						</a>
-						<a href="#">
+						<a href="#" @click.prevent="Email_show=!Email_show">
 							<i class="fas fa-pencil-alt"></i>
 							Электронная почта
 						</a>
-						<a href="#">
+						<a href="#" @click.prevent="Address_show=!Address_show">
 							<i class="fas fa-pencil-alt"></i>
 							Почтовый адрес
 						</a>
@@ -80,7 +80,7 @@
 							<form name="contacts" method="post" action="#">
 								<div class="r-flex">
 									<label for="phone">Телефон:</label>
-									<input type="tel" name="phone" v-model="profile.user.username" disabled/>
+									<input type="tel" name="phone" v-model="profile.user.phoneNumber" disabled/>
 								</div>
 								<div class="r-flex">
 									<label for="email" >Электронная почта:</label>
@@ -109,7 +109,7 @@
 				
 			</div><!--profile_container-->
 		</div><!--container-->
-		<div v-show="FIO_show" id="profile_fio" :class="[modal, FIO_show? pointer_events_on : '']">
+		<div v-show="FIO_show" id="profile_fio" :class="[modal, FIO_show ? pointer_events_on : '']">
 			<div class="r-flex">
 				<p id="close_modal fio" class="modal_close">
 					<a href="#" class="close_X" id="fio_close_X" @click.prevent="FIO_show=!FIO_show">
@@ -121,6 +121,7 @@
 				</h2>
 				<form name="profile_fio" id="profile_form" action="#" method="post" class="r-flex">
 					<input type="text" id="firstname" name="firstname" :value="profile.user.firstName"/>
+					<input type="text" id="secondname" name="secondname" :value="profile.user.patronymic"/>
 					<input type="text" id="lastname" name="lastname" :value="profile.user.lastName"/>
 					<div class="login_controls r-flex">
 						<input type="button" name="cancel" id="cancel_fio" @click.prevent="FIO_show=!FIO_show" value="Отменить"></input>
@@ -128,62 +129,141 @@
 					</div>
 				</form>
 			</div>
-		</div>
+		</div><!--FIO-modal-->
+		<div v-show="Phone_show" id="profile_phone" :class="[modal, Phone_show ? pointer_events_on : '']">
+			<div class="r-flex">
+				<p id="close_modal fio" class="modal_close">
+					<a href="#" class="close_X" id="fio_close_X" @click.prevent="Phone_show=!Phone_show">
+						X
+					</a>
+				</p>
+				<h2>
+					Телефон
+				</h2>
+				<form name="profile_phone" id="profile_form_phone" action="#" method="post" class="r-flex">
+					<input type="tel" id="phonenumber" name="phonenumber" :value="profile.user.phoneNumber"/>
+					<div class="login_controls r-flex">
+						<input type="button" name="cancel" id="cancel_fio" @click.prevent="Phone_show=!Phone_show" value="Отменить"></input>
+						<input type="submit" name="submit" id="submit_fio" value="Сохранить" @click.prevent="changephoneNumber"></input>
+					</div>
+				</form>
+			</div>
+		</div><!--Phone-modal-->
+		<div v-show="Email_show" id="profile_form_email" :class="[modal, Email_show ? pointer_events_on : '']">
+			<div class="r-flex">
+				<p id="close_modal fio" class="modal_close">
+					<a href="#" class="close_X" id="fio_close_X" @click.prevent="Email_show=!Email_show">
+						X
+					</a>
+				</p>
+				<h2>
+					Электронная почта
+				</h2>
+				<form name="profile_email" id="profile_form_email" action="#" method="post" class="r-flex">
+					<input type="email" id="email" name="email" :value="profile.user.email"/>
+					<div class="login_controls r-flex">
+						<input type="button" name="cancel" id="cancel_email" @click.prevent="Email_show=!Email_show" value="Отменить"></input>
+						<input type="submit" name="submit" id="submit_email" value="Сохранить" @click.prevent="changeEmail"></input>
+					</div>
+				</form>
+			</div>
+		</div><!--Email-modal-->
+		<div v-show="Address_show" id="profile_form_address" :class="[modal, Address_show ? pointer_events_on : '']">
+			<div class="r-flex">
+				<p id="close_modal fio" class="modal_close">
+					<a href="#" class="close_X" id="fio_close_X" @click.prevent="Address_show=!Address_show">
+						X
+					</a>
+				</p>
+				<h2>
+					Почтовый адрес
+				</h2>
+				<form name="profile_address" id="profile_form_address" action="#" method="post" class="r-flex">
+					<input type="text" id="address" name="address" :value="profile.user.address"/>
+					<div class="login_controls r-flex">
+						<input type="button" name="cancel" id="cancel_address" @click.prevent="Address_show=!Address_show" value="Отменить"></input>
+						<input type="submit" name="submit" id="submit_address" value="Сохранить" @click.prevent="changeAddress"></input>
+					</div>
+				</form>
+			</div>
+		</div><!--Address-modal-->
 	</div>
 </template>
 
 <script>
 // @ is an alias to /src
-//import Posts from '../components/Posts.vue'
 import axios from 'axios';
-
+import {mapState} from 'vuex';
 export default {
   name: 'profile',
   components: {
     //Posts
   },
   data: () => ({
-		profile: {
-			"accounts": [
-				{
-					"id": null,
-					"address": "",
-					"houseNumber": "",
-					"acresAmount": null
-				}
-			],
-			"user": {
-				"username": "",
-				"firstName": "",
-				"lastName": "",
-				"patronymic": "",
-				"email": "",
-				"photoLink": "",
-				"address": ""
-			}
-		},
 		loading: false,
 		FIO_show: false,
+		Phone_show: false,
+		Email_show: false,
+		Address_show: false,
 		modal: 'modal_profile',
 		pointer_events_on: 'pointer_events_on',
   }),
+  computed: {
+	...mapState(['profile']),
+  },
   methods: {
 	changeFIO(){
 		let firstname = document.getElementById('firstname').value;
 		let lastname = document.getElementById('lastname').value;
-		this.$store.dispatch('updateProfile', {"firstName": firstname, "lastName": lastname})
+		let secondname = document.getElementById('secondname').value;
+		this.updateProfile({"firstName": firstname, "lastName": lastname, "patronymic": secondname})
 			.then(updatedProfile => {
-				this.profile = updatedProfile;
 				this.FIO_show = false;
 			})
 		
+	},
+	changephoneNumber(){
+		let phoneNumber = document.getElementById('phonenumber').value;
+		this.updateProfile({phoneNumber})
+			.then(updatedProfile => {
+				this.Phone_show = false;
+				/*
+				this.$store.dispatch('logout')
+					.then(
+						() => {
+							if(window.location.pathname === '/') this.$forceUpdate();
+							else this.$router.push('/');
+						}
+					)
+					*/
+			})
+	},
+	changeEmail(){
+		let email = document.getElementById('email').value;
+		this.updateProfile({email})
+			.then(
+				() => {
+					this.Email_show = false;
+				}
+			)
+	},
+	changeAddress(){
+		let address = document.getElementById('address').value;
+		this.updateProfile({address})
+			.then(
+				() => {
+					this.Address_show = false;
+				}
+			)
+	},
+	updateProfile(newProfile){
+		return this.$store.dispatch('updateProfile', newProfile)
 	}
   },
   mounted() {
-  this.loading = true;
+	this.loading = true;
 	this.$store.dispatch('fetchProfile')
 	.then( profile => {
-		this.profile = profile;
 		this.loading = false;
 	})
   }

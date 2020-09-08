@@ -74,7 +74,7 @@
 						<p>
 							{{username}}
 						</p>
-						<a href="#">
+						<a href="#" @click.prevent="logout">
 							выход
 						</a>
 					</div>
@@ -113,24 +113,31 @@
 
 <script>
     import store from './store/index';
-
+	import {mapState} from 'vuex';
     export default {
         components: {
         },
         data: () => ({
-            isLogined: false,
+            //isLogined: false,
 			showModal: false,
 			modal: 'modal',
 			login: 'login_active',
-			username: '',
+			//username: '',
 			password: '',
         }),
-
+		computed: {
+			isLogined(){
+				return this.$store.getters.isAuthenticated;
+			},
+			...mapState(['username']),
+			
+		},
         methods: {
             logout(){
               this.$store.dispatch('logout')
                   .then(()=>{
-                      this.$router.push('/')
+					if(window.location.pathname !== '/') this.$router.push('/');
+					this.isLogined = false;
                   })
             },
             signIn(){
@@ -153,8 +160,6 @@
                 
             }
 
-        },
-        computed: {
         },
         mounted() {
 			this.username = this.$store.getters.getUsername;
