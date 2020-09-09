@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import axios from 'axios';
 
+import './assets/css/styles.css';
+
 Vue.config.productionTip = false;
 
 const token = localStorage.getItem('user-token');

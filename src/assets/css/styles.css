@@ -32,8 +32,8 @@ a{
 	background-color: #E5E5E5;
 	padding: 0 0 30px 0;
 }
-.container{
-	max-width: 1440px;
+.container_my{
+	width: 1440px;
 	margin: 0 auto;
 }
 footer{
@@ -411,6 +411,9 @@ main{
 	z-index: 99999;
 	pointer-events: none;
 }
+.pointer_events_on{
+	pointer-events: auto;	
+}
 .modal:target {
     /* display: block; */
     pointer-events: auto;
@@ -486,7 +489,12 @@ input[type="button"]:hover{
 	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 	border-color: blue;
 }
-form[name="profile_fio"]{
+form[name="profile_fio"],
+form[name="profile_phone"],
+form[name="profile_email"],
+form[name="profile_address"]
+
+{
 	flex-direction: column;
 	justify-content: space-around;
 	height: 200px;
@@ -498,7 +506,11 @@ form[name="profile_fio"]{
 	text-align: center;
 	color: #404040;
 }
-form[name="profile_fio"] > input{
+form[name="profile_fio"] > input,
+form[name="profile_phone"] > input,
+form[name="profile_email"] > input,
+form[name="profile_address"] > input
+{
 	padding: 8px 7px;
 	background-color: #F4F4F4;
 	box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25);
@@ -861,7 +873,7 @@ img[alt="member2"]{
 	font-weight: 600;
 	font-size: 20px;
 	line-height: 24px;
-	min-width: 300px;
+	min-width: 308px;
 	background-color: #FFF;
 	padding: 27px 9px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -876,6 +888,16 @@ img[alt="member2"]{
 .cabinet_personal img{
 	display: block;
 	border-radius: 120px;
+}
+.cabinet_header{
+	border-bottom: 1px solid #C4C4C4;
+	width: 100%;
+	margin-bottom: 5px;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 24px;
+	text-align: center;
+	color: #404040
 }
 .cabinet_general{
 	background-color: #FFF;
@@ -902,6 +924,7 @@ img[alt="member2"]{
 	line-height: 24px;
 	color: #404040;
 	padding: 22px 0 0 0;
+	flex-grow: 12; 
 }
 .cabinet_top{
 	padding: 10px 0 0 0;
@@ -937,14 +960,14 @@ img[alt="member2"]{
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 5px;
 	margin: 17px 0 0 0;
-	  background-color: #FFF;
+	background-color: #FFF;
 }
 /* Change background color of buttons on hover */
 .cabinet_bottom button:hover {
   background-color:#FFF;
   border: 1px solid blue;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 21px;
+  border-radius: 5px;
 }
 
 /* Create an active/current tablink class */
@@ -1047,14 +1070,14 @@ img[alt="member2"]{
 }
 /*profile page*/
 .profile_container main{
-	max-width: 1029px;
-	min-width: 300px;
+	min-width: 1029px;
 	background-color: #FFF;
 	flex-grow: 12;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	flex-direction: column;
 	align-items: center;
 	padding: 27px 45px 35px 45px;
+	margin-left: 30px;
 }
 .profile_container main > h1{
 	font-weight: 600;
@@ -1066,11 +1089,6 @@ img[alt="member2"]{
 .profile_container main > h2{
 	margin: 12px 0;
 }
-.profile_container main > h1 + div{
-	border: 1px solid #C4C4C4;
-	width: 100%;
-	margin: 9px 0;
-}
 .profile_container main > img{
 	border: 2px solid #FFFFFF;
 	box-sizing: border-box;
@@ -1078,15 +1096,26 @@ img[alt="member2"]{
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	
 }
+.profile_top{
+	width: 100%;
+}
+.profile_top_left{
+	margin: auto 0;
+	min-width: 378px;
+}
 .profile_container main > img :after{
 	content: "Житель";
 }
 .profile_container aside{
-	width: 340px;
-	height: 700px;
-	flex-direction: column;
+	display: flex;
+	flex-wrap: wrap;
+	flex-grow: 12;
 	padding: 122px 30px;
 	align-items: center;
+	padding: 0 0 20px 20px;
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: space-between;
 }
 .profile_container aside a{
 	font-weight: 600;
@@ -1102,6 +1131,7 @@ img[alt="member2"]{
 	background-color: #EFEFEF;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 5px;
+	margin-bottom: 10px;
 }
 .profile_container aside a > i{
 	margin: 0 14px 0 0;

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Profile from '../views/Profile.vue'
+//import Home from '../views/Home.vue'
+// import Profile from '../views/Profile.vue'
+// import Personal from '../components/Personal.vue'
 import Shops from '../components/Shops.vue'
 import ShopAdd from '../components/ShopAdd.vue'
 import Map from "../views/Map";
@@ -32,14 +33,20 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: Home
+        component: ()=>import(/*webpackChunkName: "Home page"*/ '@/views/Home')
     },
     {
         path: '/profile',
         name:'profile',
-        component: Profile,
-        props: true,
-		// beforeEnter: ifAuthenticated
+        component: ()=>import(/*webpackChunkName: "Profile page"*/ '@/views/Profile'),
+		// beforeEnter: ifAuthenticated,
+		children: [
+			{
+				path: '/profile/personal',
+				name: "personal",
+				component: ()=>import(/*webpackChunkName: "Profile Personal"*/ '@/components/Personal')
+			}
+		]
     },
     {
         path: '/chains',
