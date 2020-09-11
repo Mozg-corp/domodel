@@ -38,13 +38,19 @@ const routes = [
     {
         path: '/profile',
         name:'profile',
+		default: '/profile/personal',
         component: ()=>import(/*webpackChunkName: "Profile page"*/ '@/views/Profile'),
 		// beforeEnter: ifAuthenticated,
 		children: [
 			{
-				path: '/profile/personal',
-				name: "personal",
+				path: 'personal',
+				name: "personal", 
 				component: ()=>import(/*webpackChunkName: "Profile Personal"*/ '@/components/Personal')
+			},
+			{
+				path: 'counter',
+				name: 'counter',
+				component: ()=>import(/*webpackChunkName: "Profile Counter"*/ '@/components/Counter')
 			}
 		]
     },

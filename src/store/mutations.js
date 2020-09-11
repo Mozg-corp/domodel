@@ -29,9 +29,12 @@ export default {
 
 	},
 	SET_PROFILE: (state, profile) => {
-		state.profile = profile
+		state.profile = profile;
 	},
 	SET_USER: (state, user) => {
-		state.profile.user = user
+		state.profile.user = user;
+	},
+	SET_COUNTERS: (state, counters) => {
+		state.counters = counters;
 	}
 }

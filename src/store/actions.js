@@ -8,7 +8,7 @@ export default {
 				url: '/api/v1/auth/login',
 				data: body,
 				// headers: {'Content-Type': 'multipart/form-data' }
-				headers: {'Content-Type': 'Application/json' }
+				// headers: {'Content-Type': 'Application/json' }
 			}).then(response => {
 				// console.log(response);
 				if (response.data !== ''){
@@ -63,7 +63,7 @@ export default {
 					method: 'get',
 					url: '/api/v1/profile',
 					headers: {
-						'Content-Type': 'Application/json',
+						//'Content-Type': 'Application/json',
 						// 'Authorization': `${getters.getToken}`
 					}
 				})
@@ -85,6 +85,19 @@ export default {
 				let updatedUserData= response.data;
 				commit('SET_USER', updatedUserData);
 				resolve(getters.getProfile);
+			}
+		);
+	},
+	fetchCounters: ({commit, dispatch, getters}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: '/api/v1/meters',
+				})
+				let counters = response.data;
+				commit('SET_COUNTERS', counters);
+				resolve(counters);
 			}
 		);
 	}

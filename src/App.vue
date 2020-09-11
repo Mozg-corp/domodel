@@ -82,7 +82,7 @@
 				</div>
 			</header><!--header-->
 			<router-view></router-view>
-			<div id="loginForm" :class="[modal, showModal? login : '']" >
+			<div id="loginForm" :class="[modal, showModal? login_show : '']" >
 				<div class="r-flex">
 					<p id="close_modal" class="modal_close">
 						<a href="#" class="close_X" id="close_X" @click.prevent="showModal=!showModal">
@@ -93,7 +93,7 @@
 						АВТОРИЗАЦИЯ
 					</h2>
 					<form name="login" id="login" action="#" method="post" class="r-flex">
-						<input type="text" name="username" placeholder="ЛОГИН(№ участка)" v-model="username"/>
+						<input type="text" name="username" placeholder="ЛОГИН(№ участка)" v-model="login"/>
 						<input type="password" name="username" placeholder="ПАРОЛЬ" v-model="password"/>
 						<div class="login_controls r-flex">
 							<input type="submit" name="submit" value="вход" @click.prevent="signIn"></input>
@@ -120,8 +120,9 @@
         data: () => ({
 			showModal: false,
 			modal: 'modal',
-			login: 'login_active',
+			login_show: 'login_active',
 			password: '',
+			login: '',
         }),
 		computed: {
 			isLogined(){
@@ -139,7 +140,7 @@
                   })
             },
             signIn(){
-                    this.$store.dispatch('signIn', {username: this.username, password: this.password})
+                    this.$store.dispatch('signIn', {username: this.login, password: this.password})
                         .then(()=>{
 							if(this.$store.getters.authStatus === 'success'){
 								this.error = false;

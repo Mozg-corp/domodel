@@ -23,4 +23,17 @@ export default{
 			"address": ""
 		}
 	},
+	counters: [
+		{
+			accountId: null,
+			checkDate: "",
+			currentMeterData: null,
+			houseNumber: "",
+			id: null,
+			model: "",
+			serialNumber: "",
+			tariffDescription: "",
+			typeDescription: "",
+		}
+	]
 }
