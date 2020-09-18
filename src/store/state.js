@@ -4,6 +4,7 @@ export default{
 	errorMsg: '',
 	admin: localStorage.getItem('user-isAdmin') || false,
 	username: localStorage.getItem('user-username') || '',
+	contact: [],
 	profile: {
 		"accounts": [
 			{
@@ -35,5 +36,7 @@ export default{
 			tariffDescription: "",
 			typeDescription: "",
 		}
-	]
+	],
+	news: [],
+	claims: []
 }

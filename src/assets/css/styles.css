@@ -369,7 +369,6 @@ main{
 	font-size: 14px;
 	line-height: 17px;
 	text-align: right;
-	width: 83px;
 	padding: 15px 13px 13px 0;
 }
 .card_news__date  a{
@@ -692,7 +691,6 @@ form[name="contacts"] label{
 	margin: 12px 0 0 145px
 }
 .contact_address > label{
-	padding: 0 39px 0 0;
 	font-weight: normal;
 	font-size: 18px;
 	line-height: 22px;

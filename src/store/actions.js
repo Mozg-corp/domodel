@@ -14,15 +14,20 @@ export default {
 				if (response.data !== ''){
 					// let data = JSON.parse(response.data);
 					let data = response.data;
-					// console.log('data', data);
+					console.log('data', data);
 					// if(data.status === 'OK'){
 						let token = data.token,
-							isAdmin = data.admin,
 							username = data.username;
 						localStorage.setItem('user-token', token); // store the token in localstorage
 						localStorage.setItem('user-isAdmin', isAdmin);
 						localStorage.setItem('user-username', username);
 						// console.log(`Bearer_${token}`);
+						let adminRole = data.roles.findIndex((el)=>{
+							console.log(el.authority ===  "ROLE_ADMIN")
+								return  el.authority ===  "ROLE_ADMIN";
+							});
+						let isAdmin =  adminRole !== -1;
+						console.log(isAdmin);						
 						axios.defaults.headers.common['Authorization'] = `Bearer_${token}`;
 						commit('AUTH_SUCCESS', {token, isAdmin, username});
 
@@ -100,5 +105,72 @@ export default {
 				resolve(counters);
 			}
 		);
+	},
+	fetchContact: ({commit, dispatch, getters}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: '/api/v1/information/contacts'
+				})
+				let contact = response.data;
+				commit('SET_CONTACT', contact);
+				resolve(contact);
+			}
+		)
+	},
+	fetchNews: ({commit, dispatch, getters}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: '/api/v1/news/relevant'
+				})
+				let news = response.data;
+				commit('SET_NEWS', news);
+				resolve(news);
+			}
+		)
+	},
+	createNews: ({commit, dispatch, getters}, news) => {
+		return new Promise(
+			async (resolve, reject) => {
+					let response = await axios({
+						method: 'post',
+						url: '/api/v1/news',
+						data: news
+					})
+					let addedNews = response.data;
+					dispatch('fetchNews');
+					resolve(addedNews);
+			}
+		)
+	},
+	updateNews: ({commit, dispatch, getters}, news) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: `/api/v1/news/${news.id}`,
+					data: news
+				})
+				let updatedNews = response.data;
+				dispatch('fetchNews');
+				resolve(updatedNews);
+			}
+		)
+	},
+	fetchClaims: ({commit, dispatch, getters}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: '/api/v1/appeals'
+				})
+				let claims = response.data;
+				commit('SET_CLAIMS', claims);
+				resolve(claims);
+			}
+		)
 	}
 }

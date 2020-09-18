@@ -36,5 +36,14 @@ export default {
 	},
 	SET_COUNTERS: (state, counters) => {
 		state.counters = counters;
+	},
+	SET_CONTACT: (state, contact) => {
+		state.contact = contact
+	},
+	SET_NEWS: (state, news) => {
+		state.news = news
+	},
+	SET_CLAIMS: (state, claims) => {
+		state.claims = claims
 	}
 }

@@ -4,7 +4,7 @@
 	</div>
 	<div v-else id="payments" class="tabcontent" style="display: block;">
 	
-			<CounterItem v-for="house in counters.reduce( (acc, cur) => ({...acc, [cur.houseNumber]: cur}), {})" :house="house"/>
+			<CounterItem v-for="house in counters" :house="house"/>
 			
 	</div>
 </template>
@@ -32,8 +32,8 @@ export default{
 		this.fetchCounters()
 			.then( data => {
 				this.loading = false;
-				this.data = data.reduce( (acc, cur) => ({...acc, [cur.houseNumber]: [...acc[cur.houseNumber], cur]}), {})
-				console.log('dsafsdag', this.data);
+				//this.data = data.reduce( (acc, cur) => ({...acc, [cur.houseNumber]: [...acc[cur.houseNumber], cur]}), {})
+				//console.log('dsafsdag', this.data);
 			})
 	}
 }

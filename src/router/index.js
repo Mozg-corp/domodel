@@ -9,7 +9,7 @@ import Map from "../views/Map";
 import MapView from "../views/MapView";
 import AuthComponent from "../components/AuthComponent";
 import RegistrationComponent from "../components/RegistrationComponent";
-import store from '../store/index'
+import store from '../store/index';
 
 Vue.use(VueRouter);
 
@@ -51,21 +51,29 @@ const routes = [
 				path: 'counter',
 				name: 'counter',
 				component: ()=>import(/*webpackChunkName: "Profile Counter"*/ '@/components/Counter')
+			},
+			{
+				path: 'claims',
+				name: 'claims',
+				component: ()=>import(/*webpackChunkName: "Profile Claims"*/ '@/components/Claims')
+			},
+			{
+				path: 'claims/:id',
+				name: 'claims',
+				props: true,
+				component: ()=>import(/*webpackChunkName: "Profile Claims"*/ '@/components/ClaimSingle')
 			}
 		]
     },
     {
-        path: '/chains',
-        name:'shops',
-        component: Shops,
-        props: true
+        path: '/about',
+        name:'about',
+        component: ()=>import(/*webpackChunkName: "About page"*/ '@/views/About.vue'),
     },
     {
-        path: '/shop-add',
-        name:'shopAdd',
-        component: ShopAdd,
-        props: true,
-        beforeEnter: ifAuthenticated
+        path: '/contacts',
+        name:'contacts',
+        component: ()=>import(/*webpackChunkName: 'Contacts Page'*/ '@/views/Contacts.vue')
     },
     {
         path: '/map/draw',

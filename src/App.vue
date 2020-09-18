@@ -136,22 +136,17 @@
               this.$store.dispatch('logout')
                   .then(()=>{
 					if(window.location.pathname !== '/') this.$router.push('/');
-					this.isLogined = false;
                   })
             },
             signIn(){
                     this.$store.dispatch('signIn', {username: this.login, password: this.password})
                         .then(()=>{
 							if(this.$store.getters.authStatus === 'success'){
-								this.error = false;
-								//this.$router.push('/')
 								this.showModal = false;
-								this.isLogined = true;
 							}else if(this.$store.getters.authStatus === 'error'){
-								this.error = true;
-								this.msg = this.$store.getters.getErrorMsg;
-								// console.log(this)
+								//this.msg = this.$store.getters.getErrorMsg;
 							}
+							this.password = '';
                         })
                         .catch();
             },
@@ -161,8 +156,8 @@
 
         },
         mounted() {
-			this.username = this.$store.getters.getUsername;
-			this.isLogined = this.$store.getters.isAuthenticated;
+			//this.username = this.$store.getters.getUsername;
+			//this.isLogined = this.$store.getters.isAuthenticated;
         },
 		updated(){
 		
