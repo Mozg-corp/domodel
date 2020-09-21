@@ -59,9 +59,14 @@ const routes = [
 			},
 			{
 				path: 'claims/:id',
-				name: 'claims',
+				name: 'single claim',
 				props: true,
 				component: ()=>import(/*webpackChunkName: "Profile Claims"*/ '@/components/ClaimSingle')
+			},
+			{
+				path: 'createClaim',
+				name: 'CreateClaim',
+				component: ()=>import(/*webpackChunkName: 'Create Claim'*/ '@/components/ClaimCreate.vue')
 			}
 		]
     },

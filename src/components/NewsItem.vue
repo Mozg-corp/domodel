@@ -1,13 +1,13 @@
 <template>
 	<article v-show="news.id!==editingId" :class="[card_news, news.pinned? pinned:'']">
-		<img src="" alt="news foto">
+		<img src="https://via.placeholder.com/165X120" alt="news foto">
 		<div class="card_news__body">
 			<div :class="['card_header', news.pinned? 'card_header__impotant' : '']">
 				<h3>
 					{{news.title}}
 				</h3>
 				<p v-if="cut">
-					{{news.shortText}}
+					{{news.fullText.substr(0,60)}}
 				</p>
 				<p v-else>
 					{{news.fullText}}

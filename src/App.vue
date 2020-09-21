@@ -25,41 +25,41 @@
 					<div class="header_center r-flex">
 						<nav id="nav-menu-container_my">
 							<ul class="menu r-flex">
-								<a href="index.html">
+								<router-link :to="{name: 'home'}">
 									<li >
-											новости
+											главная
 									</li>
-								</a>
-								<a href="#">
-									<li>								
-										о нас
-									</li>
-								</a>
-								<a href="./pages/foto.html">
+								</router-link>
+								<router-link :to="{name: 'about'}">
 									<li>
-										фото
+											о нас
 									</li>
-								</a>
-								<a href="#">
+								</router-link>
+								<!--<a href="./pages/foto.html">-->
+								<!--	<li>-->
+								<!--			фото-->
+								<!--	</li>-->
+								<!--</a>-->
+								<!--<a href="#">-->
+								<!--	<li>-->
+								<!--		документы-->
+								<!--	</li>-->
+								<!--</a>-->
+								<router-link :to="{name: 'claims'}">
 									<li>
-										документы
+											обращения
 									</li>
-								</a>
-								<a href="#">
+								</router-link>
+								<!--<a href="#">-->
+								<!--	<li>-->
+								<!--		голосования-->
+								<!--	</li>-->
+								<!--</a>-->
+								<router-link :to="{name: 'contacts'}">
 									<li>
-										обращения
+											контакты
 									</li>
-								</a>
-								<a href="#">
-									<li>
-										голосования
-									</li>
-								</a>
-								<a href="./pages/contacts.html">
-									<li>
-										контакты
-									</li>
-								</a>																																								
+								</router-link>
 							</ul>
 						</nav>
 					</div>
@@ -71,9 +71,9 @@
 							</a>
 						</div>
 						<div v-show="isLogined" class="logged">
-							<p>
+							<router-link :to="{name: 'personal'}">
 								{{username}}
-							</p>
+							</router-link>
 							<a href="#" @click.prevent="logout">
 								выход
 							</a>
@@ -169,4 +169,9 @@
 	.login_active
 		display: block
 		pointer-events: auto
+	.logged > a:first-child
+		font-size: 14px
+		line-height: 17px
+		display: block
+
 </style>

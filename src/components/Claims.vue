@@ -31,9 +31,9 @@
 			<ClaimItem v-for="claim in claims" :key="claim.id" :claim="claim"/>
 		</div><!--claim_box-->
 		<div class="sendClaim_container">
-			<a href="#" class="sendClaim">
+			<router-link href="#" class="sendClaim" :to="{name: 'CreateClaim'}">
 				Подать новое обращение
-			</a>
+			</router-link>
 		</div>
 	</div>
 </template>
@@ -84,6 +84,7 @@
 		flex-grow: 1
 	.claim_item__col2
 		flex-grow: 1
+		flex-basis: 100px
 	.claim_item__col3
 		flex-grow: 9
 		flex-basis: 0

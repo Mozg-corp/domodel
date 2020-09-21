@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="contacts_container">
 				<h1>
-					ООО “ДОМОДЕЛ” <a href="#" v-show="!editable" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Сохранить</a><a href="#" v-show="editable" @click.prevent="">Отменить</a>
+					ООО “ДОМОДЕЛ” <a href="#" v-show="!editable" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Сохранить</a><a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
 				</h1>
 				<form name="contacts" method="post" action="#">
 					<section class="contacts_section">

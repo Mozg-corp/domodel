@@ -172,5 +172,21 @@ export default {
 				resolve(claims);
 			}
 		)
+	},
+	createClaim: ({commit, dispatch, getters}, newClaim) =>{
+		return new Promise(
+			async (resolve,reject) => {
+				let response = await axios({
+					method: 'post',
+					url: '/api/v1/appeals',
+					data: newClaim
+				})
+				if(response.status === 200){
+					resolve();
+				}else{
+					reject(response)
+				}
+			}
+		)
 	}
 }

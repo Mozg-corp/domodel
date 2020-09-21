@@ -2,11 +2,11 @@
 	<main >
 		<div class="container content">
 			<div v-show="isAdmin" class="add_news">
-				<article class="add_news__top">
-					<a href="#" @click.prevent="newsId=0">
+				<article class="add_news__top" v-show="newsId<=0">
+					<a href="#" @click.prevent="addNewsHandler">
 						<i class="fas fa-plus  fa-3x add_news_icon"></i>			
 					</a>
-					<span @click.prevent="newsId=0">
+					<span @click.prevent="addNewsHandler">
 						Добавить новость
 					</span>
 				</article>
@@ -45,9 +45,9 @@
 				:editingId="newsId"
 				v-on:editing="editingHandler($event)"/>
 			<p class="news_archive">
-				<a href="#" >
-					архив новостей
-				</a>
+				<!--<a href="#" >-->
+				<!--	архив новостей-->
+				<!--</a>-->
 			
 			</p>
 		</div><!--container-->
@@ -124,8 +124,13 @@ export default {
 					}
 				)
 		}
-	}
+	},
+	addNewsHandler(){
+		this.newsId=0;
+		this.editingNews = {};
+    }
   },
+  
   mounted(){
 	this.fetchNews()
 		.then(
