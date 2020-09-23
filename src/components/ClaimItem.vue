@@ -55,12 +55,27 @@
 		background: #E2EDFA
 		border-radius: 10px
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+		text-align: center
+		line-height: 25px
+		padding: 3px 12px
+		font-size: 16px
+		color: #929292
 	.canceled
 		background: #FFE2E1
 		border-radius: 10px
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+		text-align: center
+		line-height: 25px
+		padding: 3px 12px
+		font-size: 16px
+		color: #929292
 	.done
 		background: #EBF4E8
 		border-radius: 10px
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+		text-align: center
+		line-height: 25px
+		padding: 3px 12px
+		font-size: 16px
+		color: #929292
 </style>

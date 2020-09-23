@@ -25,7 +25,7 @@
 							<!-- Tab links -->
 							<div class="cabinet_bottom">
 								<router-link class="cabinet__link" :to="{name: 'personal'}">Профиль</router-link>
-								<button class="cabinet__link" data-id="meters">Счета и взносы</button>
+								<router-link class="cabinet__link" :to="{name: 'claims'}" data-id="meters">Счета и взносы</router-link>
 								<router-link class="cabinet__link" :to="{name: 'counter'}">Показания приборов учета</router-link>
 							</div>
 						</article>
