@@ -79,6 +79,7 @@ export default {
 		)
 	},
 	updateProfile: ({commit, dispatch, getters}, newUserData) => {
+		console.log(newUserData)
 		return new Promise(
 			async (resolve, rejected) => {
 				let response = await axios ({
@@ -210,5 +211,24 @@ export default {
 				}
 			}
 		)
-	}
+	},
+	createNewContactField: ({commit, dispatch}, newField) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: '/api/v1/information/contacts',
+					data: newField
+				})
+				if(response.status === 200){
+					dispatch('fetchContact')
+						.then(
+							d => resolve()					
+						)
+				}else{
+					reject(response)
+				}
+			}
+		)
+	}	
 }

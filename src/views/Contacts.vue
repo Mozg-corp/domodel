@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="contacts_container">
 				<h1>
-					ООО “ДОМОДЕЛ” <a href="#" v-show="!editable" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Сохранить</a><a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
+					ООО “ДОМОДЕЛ” <a href="#" v-show="!editable" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
 				</h1>
 				<form name="contacts" method="post" action="#">
 					<section class="contacts_section">
@@ -11,6 +11,13 @@
 							Контакты
 						</h2>
 						<ContactItem v-for="item in contact" :key="item.id" :title="item.title" :text="item.text" :disabled="!editable"/>
+						<article>
+							<div class="contact r-flex">
+								<input :disabled="!addField" type="text" v-model="title" placeholder="Название поля" class="field_name"/>
+								<input :disabled="!addField" type="text" v-model="text" placeholder="Значение поля" class="field_value"/>
+							</div>
+						</article>
+						<a href="#" v-show="editable&&!addField" @click.prevent="addField=!addField">Новое поле</a><a v-show="addField" href="#" @click.prevent="addFieldHandler"> Добавить это поле</a>
 					</section>
 					<section class="requisites_section">
 						<h2 class="requisites_header">
@@ -88,6 +95,10 @@
 		data: ()=>({
 			editable: false,
 			loading: false,
+			addField: false,
+			title: "",
+			text: "",
+			disabled: ""
 		}),
 		computed: {
 			contact: {
@@ -100,7 +111,16 @@
 			}
 		},
 		methods: {
-			...mapActions(['fetchContact'])		
+			addFieldHandler(){
+				this.createNewContactField({hidden:false,title: this.title, text: this.text})
+					.then(()=>{
+						this.addField = false;
+						this.title = "";
+						this.text = "";
+					})
+					.catch(e=> console.log(e))
+			},
+			...mapActions(['fetchContact', 'createNewContactField'])		
 		},
 		mounted(){
 			this.loading = true;
@@ -108,10 +128,10 @@
 				.then(
 					contact => {
 						this.loading = false;
-						console.log(contact.filter((el)=> {
-							el.title === 'Текст раздела 1 (например контактные данные)'
-							console.log(el)
-						}))
+						//console.log(contact.filter((el)=> {
+						//	el.title === 'Текст раздела 1 (например контактные данные)'
+						//	console.log(el)
+						//}))
 					}
 				)
 			//contact.filter((el)=>{el.title === "описание раздела 1"}
@@ -120,8 +140,25 @@
 	}
 </script>
 <style scoped lang="sass">
-
 	form label
 		min-width: 170px
+	.field_value
+		flex-grow: 3
+		font-weight: normal
+		font-size: 20px
+		line-height: 24px
+		word-break: break-all
+		font-weight: 300
+		background-color: -internal-light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))
+	input, textarea
+		background-color: rgba(239, 239, 239, 0.3)
+	input:disabled, textarea:disabled
+		border: 1px solid #FFF
+		background-color:  #FFF
+	label
+		min-width: 170px
+	.field_name:disabled::placeholder,
+	.field_value:disabled::placeholder
+		color: #FFF
 
 </style>

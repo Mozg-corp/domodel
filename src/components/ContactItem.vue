@@ -4,7 +4,7 @@
 			<label>
 				{{title}}:
 			</label>
-			<input :disabled="disabled" type="tel" :value="text"/>
+			<input :disabled="disabled" type="text" :value="text"/>
 		</div>
 	</article>
 </template>

@@ -1,6 +1,6 @@
 <template>
 	<main >
-		<div class="container content">
+		<div class="container_my content">
 			<div v-show="isAdmin" class="add_news">
 				<article class="add_news__top" v-show="newsId<=0">
 					<a href="#" @click.prevent="addNewsHandler">
