@@ -2,6 +2,7 @@
 node_modules
 /dist
 /public
+*.zip
 *.bak
 
 # local env files

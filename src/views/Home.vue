@@ -7,7 +7,7 @@
 						<i class="fas fa-plus  fa-3x add_news_icon"></i>			
 					</a>
 					<span @click.prevent="addNewsHandler">
-						Добавить новость
+						<b>+</b>Добавить новость
 					</span>
 				</article>
 			</div>

@@ -62,3 +62,7 @@
 		}
 	}
 </script>
+<style scoped lang="sass">
+	.card_news__date p
+		width: 90px
+</style>

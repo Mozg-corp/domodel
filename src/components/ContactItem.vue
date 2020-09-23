@@ -1,10 +1,10 @@
 <template>
 	<article>
 		<div class="contact r-flex">
-			<label for="phone">
+			<label>
 				{{title}}:
 			</label>
-			<input :disabled="disabled" name="phone" type="tel" :value="text"/>
+			<input :disabled="disabled" type="tel" :value="text"/>
 		</div>
 	</article>
 </template>

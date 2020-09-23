@@ -188,5 +188,27 @@ export default {
 				}
 			}
 		)
+	},
+	sendIndication: ({commit, dispatch, getters}, {id, value}) => {
+		console.log(id, value)
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: `/api/v1/meters/${id}/data`,
+					params: {
+					  submitData: value
+					}
+				})
+				if(response.status === 200){
+					dispatch('fetchCounters')
+						.then(
+							d => resolve()					
+						)
+				}else{
+					reject(response)
+				}
+			}
+		)
 	}
 }

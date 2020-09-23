@@ -1,14 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-//import Home from '../views/Home.vue'
-// import Profile from '../views/Profile.vue'
-// import Personal from '../components/Personal.vue'
-import Shops from '../components/Shops.vue'
-import ShopAdd from '../components/ShopAdd.vue'
-import Map from "../views/Map";
-import MapView from "../views/MapView";
-import AuthComponent from "../components/AuthComponent";
-import RegistrationComponent from "../components/RegistrationComponent";
 import store from '../store/index';
 
 Vue.use(VueRouter);
@@ -79,32 +70,6 @@ const routes = [
         path: '/contacts',
         name:'contacts',
         component: ()=>import(/*webpackChunkName: 'Contacts Page'*/ '@/views/Contacts.vue')
-    },
-    {
-        path: '/map/draw',
-        name:'mapdraw',
-        component: Map,
-        beforeEnter: ifAuthenticated,
-        props: true
-    },
-    {
-        path: '/map/view/:id',
-        name:'mapview',
-        component: MapView,
-        props: true
-
-    },
-    {
-        path: '/sign-in',
-        name:'signin',
-        component: AuthComponent,
-        beforeEnter: ifNotAuthenticated,
-    },
-    {
-        path: '/sign-up',
-        name:'signup',
-        component: RegistrationComponent,
-        beforeEnter: ifNotAuthenticated,
     }
 ]
 

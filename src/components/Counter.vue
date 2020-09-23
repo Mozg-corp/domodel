@@ -33,7 +33,7 @@ export default{
 			.then( data => {
 				this.loading = false;
 				//this.data = data.reduce( (acc, cur) => ({...acc, [cur.houseNumber]: [...acc[cur.houseNumber], cur]}), {})
-				//console.log('dsafsdag', this.data);
+				//console.log('dsafsdag', data);
 			})
 	}
 }

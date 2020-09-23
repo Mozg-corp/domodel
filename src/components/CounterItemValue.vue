@@ -2,16 +2,16 @@
 	<div>
 		<article class="member_meters r-flex">
 				<h2>
-					Счетчик, {{counter.model}}  № {{counter.serialNumber}}
+					{{meter.typeDescription}}, {{meter.model}}  № {{meter.serialNumber}}
 				</h2>
 			</article>
 			<form class="counter_box r-flex" method="post" action="#" name="electricity_form">
 				<div class="previos_numbers r-flex">
 					<p>
-						Предыдущие показания от 13.08.20
+						Предыдущие показания от <br/> {{meter.currentMeterData.creationDate}}
 					</p>
 					<p>
-						<b>{{counter.currentMeterData}}</b>
+						<b>{{meter.currentMeterData.value}}</b>
 					</p>
 				</div>
 				<div class="current_numbers r-flex">
@@ -21,22 +21,32 @@
 					<input type="text" name="electricity_value" placeholder="13984+N" v-model="newValue"/>
 				</div>
 				<div>
-					<input type="submit" name="send_electricity" value="Отправить" class="send_value"/>
+					<input type="submit" name="send_electricity" value="Отправить" class="send_value" @click.prevent="sendIndicationHandler"/>
 				</div>
 			</form>
 	</div>
 </template>
 <script>
+import {mapActions} from 'vuex';
 export default{
-	name: 'CounterItem',
+	name: 'CounterItemValue',
 	props: [
-		'counter'
+		'meter'
 	],
 	data: ()=>({
 		newValue: null
 	}),
+	methods: {
+		sendIndicationHandler(){
+			this.sendIndication({id: this.meter.id, value: +this.newValue})
+				.then(
+					d => this.newValue = null
+				)
+		},
+		...mapActions(['sendIndication'])
+	},
 	mounted(){
-		console.log(this.counter)
+		//console.log(this.meter)
 	}
 }
 </script>

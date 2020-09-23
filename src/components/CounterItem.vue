@@ -11,17 +11,21 @@
 						Объект:
 					</h3>
 					<p class="payment_subject">
-						СНТ "Юбилейный" МО, Ногинский район поселок им. Воровского, участок №28
+						<b>участок №{{house.houseNumber}}</b>    ({{house.address}})
 					</p>
 				</div>
 			</article>
-			<!--<CounterItemValue v-for="counters"/>-->
+			<CounterItemValue v-for="meter in house.meters" :meter="meter"/>
 		</div>
 	</div>
 </template>
 <script>
+import CounterItemValue from '@/components/CounterItemValue';
 export default{
 	name: 'CounterItem',
+	components: {
+		CounterItemValue
+	},
 	props: [
 		'house'
 	],
@@ -29,7 +33,7 @@ export default{
 		newValue: null
 	}),
 	mounted(){
-		console.log(this.house)
+		//console.log(this.house)
 	}
 }
 </script>
