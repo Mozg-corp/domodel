@@ -5,6 +5,18 @@ export default{
 	admin: localStorage.getItem('user-isAdmin') || false,
 	username: localStorage.getItem('user-username') || '',
 	contact: [],
+	requisites: {
+		bankAccount: "",
+		bankName: "",
+		bik: "",
+		companyAddress: "",
+		companyName: "",
+		correspondentAccount: "",
+		id: "",
+		inn: "",
+		kpp: "",
+		ogrn: ""
+	},
 	profile: {
 		"accounts": [
 			{

@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="contacts_container">
 				<h1>
-					ООО “ДОМОДЕЛ” <a href="#" v-show="!editable" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
+					{{requisites.companyName}} <a href="#" v-show="!editable" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
 				</h1>
 				<form name="contacts" method="post" action="#">
 					<section class="contacts_section">
@@ -25,14 +25,14 @@
 						</h2>
 						<article>
 							<h3 class="company_name">
-								ООО “ДОМОДЕЛ”
+								{{requisites.companyName}} 
 							</h3>
 							<div class="requisites_details  r-flex">
 								
 								<label for="inn" class="inn">
 									ИНН:
 								</label>
-								<input :disabled="!editable" type="number" name="inn" value="000000000001"/>
+								<input :disabled="!editable" type="number" name="inn" :value="requisites.inn"/>
 							</div>
 						</article>
 						<article>
@@ -41,7 +41,7 @@
 								<label for="kpp" class="kpp">
 									КПП:
 								</label>
-								<input :disabled="!editable" type="number" name="kpp" value="000000000000">
+								<input :disabled="!editable" type="number" name="kpp" :value="requisites.kpp">
 							</div>
 						</article>
 						<article>
@@ -50,7 +50,7 @@
 								<label for="ogrn" class="ogrn">
 									ОГРН:
 								</label>
-								<input :disabled="!editable" type="number" name="ogrn" value="0000000000000"/>
+								<input :disabled="!editable" type="number" name="ogrn" :value="requisites.ogrn"/>
 							</div>
 						</article>
 						<article>
@@ -59,7 +59,7 @@
 								<label for="account" class="account">
 									Р/С:
 								</label>
-								<input :disabled="!editable" type="number" name="account" value="324493100000000024578"/>
+								<input :disabled="!editable" type="number" name="account" :value="requisites.bankAccount"/>
 							</div>
 						</article>
 						<article>
@@ -68,7 +68,7 @@
 								<label for="kc" class="kc">
 									К/С:
 								</label>
-								<input :disabled="!editable" type="number" name="kc" value="89993100000000024578"/>
+								<input :disabled="!editable" type="number" name="kc" :value="requisites.correspondentAccount"/>
 							</div>
 						</article>
 						<article>
@@ -77,7 +77,7 @@
 								<label for="bic" class="bic">
 									БИК:
 								</label>
-								<input :disabled="!editable" type="number" name="bic" value="000000000"/>
+								<input :disabled="!editable" type="number" name="bic" :value="requisites.bik"/>
 							</div>
 						</article>
 					</section>
@@ -87,7 +87,7 @@
 	</main> <!--main-->
 </template>
 <script>
-	import {mapActions} from 'vuex';
+	import {mapActions, mapState} from 'vuex';
 	import ContactItem from '@/components/ContactItem.vue';
 	export default{
 		name: "Contacts",
@@ -108,7 +108,8 @@
 				set(){
 					
 				}
-			}
+			},
+			...mapState(['requisites'])
 		},
 		methods: {
 			addFieldHandler(){
@@ -120,7 +121,7 @@
 					})
 					.catch(e=> console.log(e))
 			},
-			...mapActions(['fetchContact', 'createNewContactField'])		
+			...mapActions(['fetchContact', 'createNewContactField', 'fetchRequisites'])		
 		},
 		mounted(){
 			this.loading = true;
@@ -128,11 +129,13 @@
 				.then(
 					contact => {
 						this.loading = false;
-						//console.log(contact.filter((el)=> {
-						//	el.title === 'Текст раздела 1 (например контактные данные)'
-						//	console.log(el)
-						//}))
 					}
+				)
+			this.fetchRequisites()
+				.then(
+					//(r)=>console.log(r)
+				).catch(
+					e=> console.log(e)
 				)
 			//contact.filter((el)=>{el.title === "описание раздела 1"}
 			

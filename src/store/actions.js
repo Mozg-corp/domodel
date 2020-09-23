@@ -230,5 +230,23 @@ export default {
 				}
 			}
 		)
-	}	
+	},
+	fetchRequisites: ({commit, dispatch}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: '/api/v1/management/requisites'
+				})
+				// console.log(response)
+				if(response.status === 200){
+					let requisites = response.data;
+					commit('SET_REQUISITES', requisites);
+					resolve(requisites)
+				}else{
+					reject(response)
+				}
+			}
+		)
+	}
 }

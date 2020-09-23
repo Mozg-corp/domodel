@@ -45,5 +45,8 @@ export default {
 	},
 	SET_CLAIMS: (state, claims) => {
 		state.claims = claims
+	},
+	SET_REQUISITES: (state, requisites) => {
+		state.requisites = requisites
 	}
 }
