@@ -83,6 +83,9 @@
 		methods: {
 			sendClaimHandler(){
 				this.createClaim(this.claim)
+					.then(
+						()=>this.$router.go(-1)
+					)
 			},
 			...mapActions(['createClaim'])
 		}

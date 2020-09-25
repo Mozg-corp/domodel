@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="contacts_container">
 				<h1>
-					{{requisites.companyName}} <a href="#" v-show="!editable" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
+					{{requisites.companyName}} <a href="#" v-show="!editable&&isAdmin" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
 				</h1>
 				<form name="contacts" method="post" action="#">
 					<section class="contacts_section">
@@ -87,7 +87,7 @@
 	</main> <!--main-->
 </template>
 <script>
-	import {mapActions, mapState} from 'vuex';
+	import {mapActions, mapState, mapGetters} from 'vuex';
 	import ContactItem from '@/components/ContactItem.vue';
 	export default{
 		name: "Contacts",
@@ -109,7 +109,8 @@
 					
 				}
 			},
-			...mapState(['requisites'])
+			...mapState(['requisites']),
+			...mapGetters(['isAdmin'])
 		},
 		methods: {
 			addFieldHandler(){

@@ -5,17 +5,17 @@ import store from '../store/index';
 Vue.use(VueRouter);
 
 const ifNotAuthenticated = (to, from, next) => {
-    if (!store.getters.isAuthenticated) {
+    if (store.getters.isAuthenticated === true) {
         next();
-        return;
+		return;
     }
     next('/');
 };
 
-const ifAuthenticated = (to, from, next) => {
-    if (store.getters.isAuthenticated && store.getters.isAdmin) {
+const ifNotAdmin = (to, from, next) => {
+	if (store.getters.isAdmin === true) {
         next();
-        return
+		return
     }
     next('/');
 };
@@ -29,9 +29,8 @@ const routes = [
     {
         path: '/profile',
         name:'profile',
-		default: '/profile/personal',
         component: ()=>import(/*webpackChunkName: "Profile page"*/ '@/views/Profile'),
-		// beforeEnter: ifAuthenticated,
+		beforeEnter: ifNotAuthenticated,
 		children: [
 			{
 				path: 'personal',
@@ -70,7 +69,59 @@ const routes = [
         path: '/contacts',
         name:'contacts',
         component: ()=>import(/*webpackChunkName: 'Contacts Page'*/ '@/views/Contacts.vue')
-    }
+    },
+	{
+		path: '/admin',
+		name: 'adminka',
+		component: ()=>import(/*webpackChunkName: 'Adminka page'*/ '@/views/Admin.vue'),
+		beforeEnter: ifNotAdmin,
+		children: [
+			{
+				path: 'cityzens',
+				name: 'cityzens',
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'Cityzens Page'*/ '@/components/Cityzens.vue')
+			},
+			{
+				path: 'personal/:id',
+				name: 'cityzen profile',
+				props: true,
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'cityzen profile'*/ '@/components/PersonalAdmin.vue')
+			},
+			{
+				path: 'meters',
+				name: 'meters list',
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/MetersList.vue')
+			},
+			{
+				path: 'meters/:id',
+				name: 'meters single',
+				props: true,
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'single meter'*/ '@/components/MeterSingle.vue')
+			},
+			{
+				path: 'votes',
+				name: 'votes list',
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/Vote.vue')
+			},
+			{
+				path: 'payments',
+				name: 'payments list',
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/Payments.vue')
+			},
+			{
+				path: 'claims',
+				name: 'claims list',
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/ClaimsAdmin.vue')
+			}
+		]
+	}
 ]
 
 const router = new VueRouter({

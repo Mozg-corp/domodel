@@ -4,7 +4,7 @@
 			<div class="cabinet_container profile_container r-flex">
 				<section class="cabinet_personal">
 						<h2>
-							ЛИЧНЫЙ КАБИНЕТ
+							АДМИНКА
 						</h2>
 						<div class="cabinet_personal_line"></div>
 						<article>
@@ -24,9 +24,11 @@
 							</div>
 							<!-- Tab links -->
 							<div class="cabinet_bottom">
-								<router-link class="cabinet__link" :to="{name: 'personal'}">Профиль</router-link>
-								<router-link class="cabinet__link" :to="{name: 'claims'}" data-id="meters">Обращения</router-link>
-								<router-link class="cabinet__link" :to="{name: 'counter'}">Показания <br/>приборов учета</router-link>
+								<router-link class="cabinet__link" :to="{name: 'cityzens'}">Жители</router-link>
+								<router-link class="cabinet__link" :to="{name: 'meters list'}">Счётчики</router-link>
+								<router-link class="cabinet__link" :to="{name: 'payments list'}">Платежи</router-link>
+								<router-link class="cabinet__link" :to="{name: 'claims list'}">Обращения</router-link>
+								<router-link class="cabinet__link" :to="{name: 'votes list'}">Голосования</router-link>
 							</div>
 						</article>
 					</section>
@@ -44,7 +46,7 @@
 import {mapState} from 'vuex';
 
 export default{
-	name: "Profile",
+	name: "Admin",
 	data: ()=>({
 	
 	}),

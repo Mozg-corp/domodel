@@ -20,7 +20,7 @@
 				<a href="#" v-else @click.prevent="cut=!cut">
 					< меньше
 				</a>
-				<div  v-show="isAdmin">
+				<div  v-show="isAdmin === true">
 					<!--<a href="#">-->
 					<!--	Закрепить-->
 					<!--</a>-->

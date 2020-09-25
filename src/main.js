@@ -15,6 +15,10 @@ if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer_${token}`;
 
 }
+store.state.admin = localStorage.getItem('user-isAdmin') === "true"? true : false;
+store.state.username = localStorage.getItem('user-username');
+store.state.token = localStorage.getItem('user-token');
+console.log(store.state)
 axios.defaults.headers.common['Content-Type'] = 'Application/json';
 new Vue({
   router,

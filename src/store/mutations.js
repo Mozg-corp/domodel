@@ -8,7 +8,7 @@ export default {
 		state.admin = isAdmin;
 		state.status = 'success';
 		state.token = token;
-		state.token = username;
+		state.username = username;
 
 	},
 
@@ -48,5 +48,17 @@ export default {
 	},
 	SET_REQUISITES: (state, requisites) => {
 		state.requisites = requisites
+	},
+	SET_CITYZENS: (state, cityzens) => {
+		state.cityzens = cityzens
+	},
+	SET_METERS: (state, meters) => {
+		state.meters = meters
+	},
+	SET_SINGLE_METER: (state, meter) => {
+		state.singleMeter = meter
+	},
+	SET_ALL_SINGLE_METER_INDICATION: (state, data) => {
+		state.singleMeterAllIndications = data
 	}
 }

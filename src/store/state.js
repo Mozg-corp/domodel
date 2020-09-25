@@ -1,9 +1,9 @@
 export default{
-	token: localStorage.getItem('user-token') || '',
+	token: '',
 	status: '',
 	errorMsg: '',
-	admin: localStorage.getItem('user-isAdmin') || false,
-	username: localStorage.getItem('user-username') || '',
+	admin: false,
+	username: '',
 	contact: [],
 	requisites: {
 		bankAccount: "",
@@ -17,6 +17,7 @@ export default{
 		kpp: "",
 		ogrn: ""
 	},
+	cityzens: [],
 	profile: {
 		"accounts": [
 			{
@@ -50,5 +51,8 @@ export default{
 		}
 	],
 	news: [],
-	claims: []
+	claims: [],
+	meters: [],
+	singleMeter: {},
+	singleMeterAllIndications: []
 }

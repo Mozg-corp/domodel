@@ -14,12 +14,11 @@ export default {
 				if (response.data !== ''){
 					// let data = JSON.parse(response.data);
 					let data = response.data;
-					console.log('data', data);
+					//console.log('data', data);
 					// if(data.status === 'OK'){
 						let token = data.token,
 							username = data.username;
 						localStorage.setItem('user-token', token); // store the token in localstorage
-						localStorage.setItem('user-isAdmin', isAdmin);
 						localStorage.setItem('user-username', username);
 						// console.log(`Bearer_${token}`);
 						let adminRole = data.roles.findIndex((el)=>{
@@ -27,7 +26,8 @@ export default {
 								return  el.authority ===  "ROLE_ADMIN";
 							});
 						let isAdmin =  adminRole !== -1;
-						console.log(isAdmin);						
+						localStorage.setItem('user-isAdmin', isAdmin);
+						//console.log('auth_action',isAdmin);						
 						axios.defaults.headers.common['Authorization'] = `Bearer_${token}`;
 						commit('AUTH_SUCCESS', {token, isAdmin, username});
 
@@ -59,24 +59,21 @@ export default {
 			resolve()
 		})
 	},
-	fetchProfile: ({commit, dispatch,getters}) => {
-		return new Promise(
-			async (resolve, reject) => {
-				// console.log(`${getters.getToken}`);
-				// axios.defaults.headers.common['Authorization']=''
-				let response =  await axios({
-					method: 'get',
-					url: '/api/v1/profile',
-					headers: {
-						//'Content-Type': 'Application/json',
-						// 'Authorization': `${getters.getToken}`
-					}
-				})
-				let profile = response.data;
-				commit('SET_PROFILE', profile);
-				resolve(profile);
-			}
-		)
+	fetchProfile: ({commit, dispatch,getters}, id) => {
+		
+			return new Promise(
+				async (resolve, reject) => {
+					let url = typeof(id) == "undefined"? '/api/v1/profile' : `/api/v1/profile/${id}`;
+					console.log(url)
+					let response =  await axios({
+						method: 'get',
+						url
+					})
+					let profile = response.data;
+					commit('SET_PROFILE', profile);
+					resolve(profile);
+				}
+			)
 	},
 	updateProfile: ({commit, dispatch, getters}, newUserData) => {
 		console.log(newUserData)
@@ -190,8 +187,9 @@ export default {
 			}
 		)
 	},
-	sendIndication: ({commit, dispatch, getters}, {id, value}) => {
-		console.log(id, value)
+	sendIndication: ({commit, dispatch, getters}, {id, value, isAdmin = false}) => {
+		//console.log(id, value)
+		// console.log(isAdmin)
 		return new Promise(
 			async (resolve, reject) => {
 				let response = await axios({
@@ -202,10 +200,17 @@ export default {
 					}
 				})
 				if(response.status === 200){
-					dispatch('fetchCounters')
+					if(isAdmin){
+						// dispatch('fetchAllMeters')
+							// .then(
+								// d => resolve(d)
+							// )
+					}else{
+						dispatch('fetchCounters')
 						.then(
-							d => resolve()					
+							d => resolve(d)					
 						)
+					}
 				}else{
 					reject(response)
 				}
@@ -248,5 +253,75 @@ export default {
 				}
 			}
 		)
+	},
+	fetchCityzens: ({commit, dispatch}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: '/api/v1/management/management/users'
+				})
+				if(response.status === 200){
+					let cityzens = response.data;
+					commit('SET_CITYZENS', cityzens);
+					resolve(cityzens)
+				}else{
+					reject(response)
+				}
+			}
+		)
+	},
+	fetchAllMeters: ({commit, dispatch}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: '/api/v1/meters/all'
+				})
+				if(response.status === 200){
+					let meters = response.data;
+					commit('SET_METERS', meters);
+					resolve(meters);
+				}else{
+					reject(response)
+				}
+				
+			}
+		)
+	},
+	fetchSingleMeter: ({commit, dispatch}, id) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'get',
+					url: `/api/v1/meters/${id}`
+				})
+				if(response.status === 200){
+					let meter = response.data
+					commit('SET_SINGLE_METER', meter);
+					resolve(meter);
+				}else{
+					reject(response)
+				}
+			}
+		)
+	},
+	fetchAllSingleMeterIndications: ({commit, dispatch}, id) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					methos: 'get',
+					url: `/api/v1/meters/${id}/data`
+				})
+				if(response.status === 200){
+					let data = response.data;
+					commit('SET_ALL_SINGLE_METER_INDICATION', data);
+					resolve(data)
+				}else{
+					reject(response)
+				}
+			}
+		)
 	}
+	
 }

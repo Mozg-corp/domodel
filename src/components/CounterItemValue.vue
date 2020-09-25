@@ -18,7 +18,7 @@
 					<p>
 						Текущие показания
 					</p>
-					<input type="text" name="electricity_value" placeholder="13984+N" v-model="newValue"/>
+					<input type="text" name="electricity_value" :placeholder="meter.currentMeterData.value.toString()+' + N'" v-model="newValue"/>
 				</div>
 				<div>
 					<input type="submit" name="send_electricity" value="Отправить" class="send_value" @click.prevent="sendIndicationHandler"/>

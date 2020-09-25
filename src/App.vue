@@ -46,6 +46,16 @@
 											контакты
 									</li>
 								</router-link>
+								<router-link v-show="isLogined&&!isAdmin" :to="{name: 'personal'}">
+									<li>
+											личный кабинет
+									</li>
+								</router-link>
+								<router-link v-show="isAdmin===true" :to="{name: 'cityzens'}">
+									<li>
+											управление снт
+									</li>
+								</router-link>
 							</ul>
 						</nav>
 					</div>
@@ -56,7 +66,10 @@
 							</a>
 						</div>
 						<div v-show="isLogined" class="logged">
-							<router-link :to="{name: 'personal'}">
+							<router-link v-if="isAdmin!==true" :to="{name: 'personal'}">
+								{{username}}
+							</router-link>
+							<router-link v-else :to="{name: 'cityzens'}">
 								{{username}}
 							</router-link>
 							<a href="#" @click.prevent="logout">
@@ -97,7 +110,7 @@
 
 <script>
     import store from './store/index';
-	import {mapState} from 'vuex';
+	import {mapState, mapGetters} from 'vuex';
     export default {
 		name: 'Layout',
         components: {
@@ -114,6 +127,7 @@
 				return this.$store.getters.isAuthenticated;
 			},
 			...mapState(['username']),
+			...mapGetters(['isAdmin']),
 			
 		},
         methods: {

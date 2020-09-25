@@ -1,7 +1,7 @@
 <template>
 	<main >
 		<div class="container_my content">
-			<div v-show="isAdmin" class="add_news">
+			<div v-show="isAdmin===true" class="add_news">
 				<article class="add_news__top" v-show="newsId<=0">
 					<a href="#" @click.prevent="addNewsHandler">
 						<i class="fas fa-plus  fa-3x add_news_icon"></i>			
@@ -11,7 +11,7 @@
 					</span>
 				</article>
 			</div>
-			<div class="add_news" v-show="newsId!==-1">
+			<div class="add_news" v-show="newsId!==-1&&isAdmin">
 				<h4>
 					Image preview
 				</h4>
