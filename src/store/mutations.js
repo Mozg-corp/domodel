@@ -60,5 +60,14 @@ export default {
 	},
 	SET_ALL_SINGLE_METER_INDICATION: (state, data) => {
 		state.singleMeterAllIndications = data
+	},
+	UPDATE_CLAIM: (state, updatedClaim) => {
+		// console.log(state.claims.findIndex(el=>el.id === updatedClaim.id))
+		let claimIndex = state.claims.findIndex(el=>el.id === updatedClaim.id);
+		//state.claims = [...state.claims.slice(0,claimIndex), updatedClaim, ...state.claims.slice(claimIndex + 1)]
+		state.claims[claimIndex] = updatedClaim;
+	},
+	ADD_NEW_COUNTER: (state, counter) => {
+		state.meters = [...state.meters, counter]
 	}
 }

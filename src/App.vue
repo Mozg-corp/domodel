@@ -46,7 +46,7 @@
 											контакты
 									</li>
 								</router-link>
-								<router-link v-show="isLogined&&!isAdmin" :to="{name: 'personal'}">
+								<router-link v-show="isLogined" :to="{name: 'personal'}">
 									<li>
 											личный кабинет
 									</li>

@@ -80,7 +80,7 @@
 			</div><!--meter_box_item-->
 		</div><!--meter_box-->
 		<div class="controls_container">
-			<a href="#" class="editMeter" @click.prevent="editBtnHandler">
+			<a href="#" class="editMeter" @click.prevent="showModal=!showModal">
 				Внести изменения
 			</a>
 			<a href="#" class="deleteMeter">
@@ -106,6 +106,75 @@
 				</div>
 			</div>
 		</div>
+		<div id="" :class="[modal, showModal? login_show : '']" >
+				<div id="updateCounter" class="r-flex">
+					<p id="close_modal" class="modal_close">
+						<a href="#" class="close_X" id="close_X" @click.prevent="showModal=!showModal">
+							X
+						</a>
+					</p>
+					<h2>
+						Редактировать счётчик
+					</h2>
+					<form name="updateCounter"  action="#" method="post" class="r-flex">
+						<div class="r-flex">
+							<label for="account">
+								<b>
+									№ лицевого счета
+								</b>
+							</label>
+							<input type="text" name="account" v-model="updateCounter.accountId"/>
+						</div>
+						<div class="r-flex">
+							<label for="typeDescription">
+								<b>
+									Тип
+								</b>
+							</label>
+							<input type="text" name="typeDescription" v-model="updateCounter.typeDescription"/>
+						</div>
+						
+						<div class="r-flex">
+							<label for="serialNumber">
+								<b>
+									Серийный номер
+								</b>
+							</label>
+							<input type="text" name="serialNumber" v-model="updateCounter.serialNumber"/>
+						</div>
+						<div class="r-flex">
+							<label for="model">
+								<b>
+									Модель
+								</b>
+							</label>
+							<input type="text" name="model" v-model="updateCounter.model"/>
+						</div>
+						<div class="r-flex">
+							<label for="checkDate">
+								<b>
+									Дата поверки
+								</b>
+							</label>
+							<input type="text" name="checkDate" v-model="updateCounter.checkDate"/>
+						</div>
+						<div class="r-flex">
+							<label for="tariffDescription">
+								<b>
+									Тарифы
+								</b>
+							</label>
+							<input type="text" name="tariffDescription" v-model="updateCounter.tariffDescription"/>
+						</div>
+						
+						
+						<div class="login_controls r-flex">
+							<input type="submit" name="submit" value="Обновить" @click.prevent="updateCounterHandler"></input>
+							<input type="button" name="cancel" value="отмена" @click.prevent="updateCancelHandler"></input>
+						</div>
+					</form>
+				</div>
+			</div>
 	</div>
 </template>
 <script>
@@ -116,13 +185,37 @@
 		components: {
 		},
 		data: ()=>({
-			loading: false
+			loading: false,
+			updateCounter: {
+				accountId: '',
+				serialNumber: '',
+				model: '',
+				typeDescription: '',
+				checkDate: '',
+				tariffDescription: ''
+			} ,
+			showModal: false,
+			modal: 'modal',
+			login_show: 'login_active',
 		}),
 		computed: {
 			...mapState(['singleMeter', 'singleMeterAllIndications'])
 		},
 		methods: {
-			...mapActions(['fetchSingleMeter', 'fetchAllSingleMeterIndications'])
+			updateCounterHandler(){
+				this.updateCounterDescription(this.updateCounter)
+					.then(
+						counter => {
+							this.updateCounter = {...counter};
+							this.showModal = ! this.showModal;
+						}
+					)
+			},
+			updateCancelHandler(){
+				this.updateCounter = {...this.singleMeter};
+				this.showModal=!this.showModal;
+			},
+			...mapActions(['fetchSingleMeter', 'fetchAllSingleMeterIndications', 'updateCounterDescription'])
 		},
 		mounted(){
 			this.loading = true;
@@ -130,16 +223,43 @@
 				.then(
 					meter => {
 						this.loading = false;
+						this.updateCounter = {...meter};
 					}
 				)
 			this.fetchAllSingleMeterIndications(this.id)
 				.then(
 					ind => console.log(ind)
 				)
+			
 		}
 	}
 </script>
 <style lang="sass">
+	form[name="updateCounter"] 
+		flex-direction: column
+		justify-content: space-around
+		padding: 40px 40px 20px 40px
+		font-style: normal
+		font-weight: normal
+		font-size: 18px
+		line-height: 22px
+		text-align: center
+		color: #404040
+		height: 100%
+	form[name="updateCounter"] input
+		margin: 5px
+		width: 60%
+		padding: 8px 7px
+		background-color: #F4F4F4
+		box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25)
+		border-radius: 5px
+		border-color: #F4F4F4
+	#updateCounter
+		width: 50%
+		height: 40%
+	.login_active
+		display: block
+		pointer-events: auto
 	.meters
 		width: 100%
 	.cabinet_header

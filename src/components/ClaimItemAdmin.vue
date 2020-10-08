@@ -10,7 +10,7 @@
 				{{claim.id}}
 			</p>
 		</div><div class="claim_item__col3">
-			<router-link :to="{name: 'single claim', params: {id: claim.id} }">
+			<router-link :to="{name: 'single claim admin', params: {id: claim.id} }">
 				{{claim.title}}
 			</router-link>
 		</div>
@@ -23,7 +23,7 @@
 </template>
 <script>
 	export default{
-		name: "ClaimItem",
+		name: "ClaimItemAdmin",
 		props: ['claim'],
 		computed: {
 		  status: function () {

@@ -4,20 +4,16 @@
 	</div>
 	<div v-else id="claims" class="profile_container__main claims">
 		<h2 class="cabinet_header">
-			ОБРАЩЕНИЯ
+			Опросы
 		</h2>	
 		<div class="claims_box r-flex">
 			<div class="claims_box__item r-flex">
 				<div class="claim_item__col1">
 					<p>
-						Дата:
+						Период проведения:
 					</p>
 				</div>
-				<div class="claim_item__col2 mg-l40">
-					<p>
-						Номер:
-					</p>
-				</div><div class="claim_item__col3 mg-l40">
+				<div class="claim_item__col3 mg-l40">
 					<p>
 						Тема:
 					</p>
@@ -28,22 +24,22 @@
 					</p>
 				</div>
 			</div><!--claim_box_item-->
-			<ClaimItemAdmin v-for="claim in claims" :key="claim.id" :claim="claim"/>
+			<!--<ClaimItem v-for="claim in claims" :key="claim.id" :claim="claim"/>-->
 		</div><!--claim_box-->
-		<!--<div class="sendClaim_container">-->
-		<!--	<router-link href="#" class="sendClaim" :to="{name: 'CreateClaim'}">-->
-		<!--		Подать новое обращение-->
-		<!--	</router-link>-->
+		<div class="sendClaim_container">
+			<router-link href="#" class="sendClaim" :to="{name: 'CreateClaim'}">
+				Создать голосование
+			</router-link>
 		</div>
 	</div>
 </template>
 <script>
 	import {mapActions, mapState} from 'vuex';
-	import ClaimItemAdmin from '@/components/ClaimItemAdmin';
+	import ClaimItem from '@/components/ClaimItem';
 	export default{
-		name: 'ClaimsAdmin',
+		name: 'Claims',
 		components: {
-			ClaimItemAdmin
+			ClaimItem
 		},
 		data: ()=>({
 			loading: false
@@ -52,11 +48,11 @@
 			...mapState(['claims'])
 		},
 		methods: {
-			...mapActions(['fetchAllClaims'])
+			...mapActions(['fetchClaims'])
 		},
 		mounted(){
 		this.loading = true;
-			this.fetchAllClaims()
+			this.fetchClaims()
 				.then(
 					claims => {
 						this.loading = false;
@@ -66,7 +62,7 @@
 		}
 	}
 </script>
-<style lang="sass">
+<style scoped lang="sass">
 	.claims
 		width: 100%
 	.cabinet_header
@@ -90,7 +86,6 @@
 		flex-basis: 0
 	.claim_item__col4
 		flex-grow: 1
-		flex-basis: 100px
 	.sendClaim
 		font-weight: 500
 		font-size: 18px

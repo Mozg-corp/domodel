@@ -10,7 +10,7 @@
 			<div class="cityzens_box__item r-flex">
 				<div class="cityzen_item__col1">
 					<p>
-						№ участка:
+						Адрес:
 					</p>
 				</div>
 				<div class="cityzen_item__col3 mg-l40">

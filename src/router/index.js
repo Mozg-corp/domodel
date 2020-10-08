@@ -103,12 +103,6 @@ const routes = [
 				component: ()=>import(/*webpackChunkName: 'single meter'*/ '@/components/MeterSingle.vue')
 			},
 			{
-				path: 'votes',
-				name: 'votes list',
-				beforeEnter: ifNotAdmin,
-				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/Vote.vue')
-			},
-			{
 				path: 'payments',
 				name: 'payments list',
 				beforeEnter: ifNotAdmin,
@@ -119,6 +113,19 @@ const routes = [
 				name: 'claims list',
 				beforeEnter: ifNotAdmin,
 				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/ClaimsAdmin.vue')
+			},
+			{
+				path: 'claims/:id',
+				name: 'single claim admin',
+				props: true,
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: "Profile Claims"*/ '@/components/ClaimSingleAdmin')
+			},
+			{
+				path: 'votes',
+				name: 'votes list',
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: "Profile Claims"*/ '@/components/VotesList')
 			}
 		]
 	}

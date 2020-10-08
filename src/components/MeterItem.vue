@@ -12,7 +12,7 @@
 		</div>
 		<div class="meter_item__col">
 			<p>
-				<router-link :to="{name: 'meters single', params: {id: meter.currentMeterData.id}}">
+				<router-link :to="{name: 'meters single', params: {id: meter.meterId}}">
 					{{meter.serialNumber}}
 				</router-link>
 			</p>

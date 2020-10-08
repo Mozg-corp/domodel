@@ -12,7 +12,7 @@
 		</div>
 		<div class="cityzen_item__col4">
 			<p >
-				{{cityzen.honeNumber}} / <router-link :to="{name: 'cityzen profile', params: {id: 1} }" class="cityzen_item__col4">{{cityzen.username}}</router-link>
+				{{cityzen.phoneNumber}} / <router-link :to="{name: 'cityzen profile', params: {id: cityzen.id} }" class="cityzen_item__col4">{{cityzen.username}}</router-link>
 			</p>
 		</div>
 	</div><!--cityzen_box_item-->

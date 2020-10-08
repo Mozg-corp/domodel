@@ -28,7 +28,7 @@
 					</p>
 				</div>
 			</div><!--claim_box_item-->
-			<!--<ClaimItem v-for="claim in claims" :key="claim.id" :claim="claim"/>-->
+			<ClaimItem v-for="claim in claims" :key="claim.id" :claim="claim"/>
 		</div><!--claim_box-->
 		<div class="sendClaim_container">
 			<router-link href="#" class="sendClaim" :to="{name: 'CreateClaim'}">

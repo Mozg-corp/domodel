@@ -75,13 +75,66 @@ export default {
 				}
 			)
 	},
+	fetchUser: ({commit, dispatch,getters}, id) => {
+		
+			return new Promise(
+				async (resolve, reject) => {
+					let url = `/api/v1/management/users/${id}`;
+					//console.log(url)
+					let response =  await axios({
+						method: 'get',
+						url
+					})
+					let profile = response.data;
+					commit('SET_PROFILE', profile);
+					resolve(profile);
+				}
+			)
+	},
+	updateUser: ({commit}, updatedProfile) => {
+			//console.log(updatedProfile)
+			//console.log(`/api/v1/management/users/${updatedProfile.id}`)
+		return new Promise(
+			
+			async (resolve, rejected) => {
+				let response = await axios({
+					method: 'post',
+					url: `/api/v1/management/users/${updatedProfile.id}`,
+					data: updatedProfile
+				})
+				if(response.status === 200){
+					let profile = response.data;
+					commit('SET_PROFILE', profile);
+					resolve(profile);
+				}else{
+					rejected(response);
+				}
+			}
+		)
+	},
+	fetchAllClaims: ({commit, dispatch,getters}) => {
+			return new Promise(
+				async (resolve, reject) => {
+					let url = `/api/v1/appeals/all`;
+					//console.log(url)
+					let response =  await axios({
+						method: 'get',
+						url
+					})
+					let claims = response.data;
+					console.log(response);
+					commit('SET_CLAIMS', claims);
+					resolve(claims);
+				}
+			)
+	},
 	updateProfile: ({commit, dispatch, getters}, newUserData) => {
 		console.log(newUserData)
 		return new Promise(
 			async (resolve, rejected) => {
 				let response = await axios ({
 					method: 'post',
-					url: 'https://localhost:8081/api/v1/profile/update',
+					url: '/api/v1/profile/update',
 					data: newUserData
 				});
 				
@@ -259,7 +312,7 @@ export default {
 			async (resolve, reject) => {
 				let response = await axios({
 					method: 'get',
-					url: '/api/v1/management/management/users'
+					url: '/api/v1/management/users'
 				})
 				if(response.status === 200){
 					let cityzens = response.data;
@@ -310,7 +363,7 @@ export default {
 		return new Promise(
 			async (resolve, reject) => {
 				let response = await axios({
-					methos: 'get',
+					method: 'get',
 					url: `/api/v1/meters/${id}/data`
 				})
 				if(response.status === 200){
@@ -322,6 +375,83 @@ export default {
 				}
 			}
 		)
+	},
+	updateClaim: ({commit, dispatch}, updatedClaim) => {
+		//commit('UPDATE_CLAIM', updatedClaim);
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: `/api/v1/appeals/${updatedClaim.id}`,
+					data: updatedClaim
+				})
+				if(response.status === 200){
+					let claim = response.data;
+					commit('UPDATE_CLAIM', claim);
+					resolve(claim);
+				}else{
+					reject(response);
+				}
+			}
+			
+		)
+	},
+	updateMetersBatch: ({commit, dispatch}, metersData) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: '/api/v1/meters/all/data',
+					data: metersData
+				})
+				if(response.status === 200){
+					dispatch('fetchAllMeters')
+						.then(
+							r => resolve(r)
+						)
+					
+				}else{
+					reject(response)
+				}
+			}
+		)
+	},
+	createNewCounter: ({commit, dispatch}, newCounter) => {
+		console.log(newCounter)
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: '/api/v1/meters',
+					data: newCounter
+				})
+				console.log(response)
+				if(response.status === 200){
+					let counter = response.data;
+					commit('ADD_NEW_COUNTER', counter);
+					resolve(counter);
+				}else{
+					reject(response)
+				}
+			}
+		)
+	},
+	updateCounterDescription: ({commit, dispatch}, updatedCounter) =>{
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'put',
+					url: '/api/v1/meters',
+					data: updatedCounter,
+				})
+				if(response.status === 200){
+					let meter = response.data;
+					commit('SET_SINGLE_METER', meter);
+					resolve(meter);
+				}else{
+					reject(response);
+				}
+			}
+		)
 	}
-	
 }
