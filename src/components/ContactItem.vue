@@ -4,18 +4,34 @@
 			<label>
 				{{title}}:
 			</label>
-			<input :disabled="disabled" type="text" :value="text"/>
+			<input :disabled="disabled" type="text" :value="text" @change="changeFieldHandler($event)"/>
 		</div>
 	</article>
 </template>
 <script>
+	import {mapActions} from 'vuex';
 	export default{
 		name: "ContactItem",
 		props: [
 			'title',
 			'text',
-			'disabled'
-		]
+			'disabled',
+			'id'
+		],
+		methods: {
+			...mapActions(['changeContactField']),
+			changeFieldHandler($event){
+				let text = $event.target.value;
+				let field = {
+					id: this.id,
+					text,
+					title: this.title
+				}
+				this.changeContactField(field)
+					//.then(f => console.log(f))
+					.catch(e=>concole.log(e))
+			}
+		}
 	}
 </script>
 <style scoped lang="sass">

@@ -115,7 +115,6 @@
 		font-weight: 300
 		font-size: 24px
 		line-height: 29px
-		color: #C4C4C4
 		border: 1px solid #C4C4C4
 		padding: 3px 20px
 		box-shadow: inset 2px 2px 2px 2px rgba(0, 0, 0, 0.25)

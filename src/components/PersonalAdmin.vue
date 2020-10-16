@@ -30,11 +30,11 @@
 						</div>
 						<div class="r-flex">
 							<label for="registration_date" >Дата регистрации:</label>
-							<input type="email" name="registration_date" :disabled="disabled" :class="disabled?'':'active_input'"/>
+							<input type="email" name="registration_date" disabled :class="disabled?'':'active_input'"/>
 						</div>
 						<div class="r-flex">
 							<label for="last_activity" >Последняя активность:</label>
-							<input type="email" name="last_activity" :disabled="disabled" :class="disabled?'':'active_input'"/>
+							<input type="email" name="last_activity" disabled :class="disabled?'':'active_input'"/>
 						</div>
 						<div class="r-flex">
 							<label for="address" >Почтовый адрес:</label>

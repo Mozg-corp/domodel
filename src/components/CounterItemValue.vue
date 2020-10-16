@@ -38,7 +38,7 @@ export default{
 	}),
 	methods: {
 		sendIndicationHandler(){
-			this.sendIndication({id: this.meter.id, value: +this.newValue})
+			this.sendIndication({id: this.meter.meterId, value: +this.newValue})
 				.then(
 					d => this.newValue = null
 				)

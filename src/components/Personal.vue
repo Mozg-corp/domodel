@@ -34,7 +34,7 @@
 						<i class="fas fa-pencil-alt"></i>
 						Почтовый адрес
 					</a>
-					<a href="#">
+					<a href="#" @click.prevent="Password_show=!Password_show">
 						<i class="fas fa-pencil-alt"></i>
 						Сменить пароль
 					</a>
@@ -151,13 +151,34 @@
 				</form>
 			</div>
 		</div><!--Address-modal-->
+		<div v-show="Password_show" id="profile_form_address" :class="[modal, Password_show ? pointer_events_on : '']">
+			<div class="r-flex">
+				<p id="close_modal fio" class="modal_close">
+					<a href="#" class="close_X" id="fio_close_X" @click.prevent="cancelPasswordChange">
+						X
+					</a>
+				</p>
+				<h2>
+					Изменить пароль
+				</h2>
+				<form name="profile_address" id="profile_form_address" action="#" method="post" class="r-flex">
+					<input type="password" name="oldPassword" v-model="passwords.oldPassword" placeholder="старый пароль"/>
+					<input type="password" name="newPassword" v-model="passwords.newPassword" placeholder="новый пароль"/>
+					<input type="password" name="newPasswordRepeat" v-model="passwords.newPasswordRepeat" placeholder="новый пароль ещё раз"/>
+					<div class="login_controls r-flex">
+						<input type="button" name="cancel" id="cancel_address" @click.prevent="cancelPasswordChange" value="Отменить"></input>
+						<input type="submit" name="submit" id="submit_address" value="Сохранить" @click.prevent="changePasswordHandler"></input>
+					</div>
+				</form>
+			</div>
+		</div><!--Password-modal-->
 		</div>
 
 </template>
 
 <script>
    // @ is an alias to /src
-	import {mapState} from 'vuex';
+	import {mapState, mapActions} from 'vuex';
 	export default {
 	  name: 'personal',
 	  components: {
@@ -169,18 +190,29 @@
 		Phone_show: false,
 		Email_show: false,
 		Address_show: false,
+		Password_show: false,
 		modal: 'modal_profile',
 		pointer_events_on: 'pointer_events_on',
+		passwords: {
+			newPassword: '',
+			newPasswordRepeat: '',
+			oldPassword: ''
+		}
 	  }),
 	  computed: {
 		...mapState(['profile']),
 	  },
 	  methods: {
+	    ...mapActions(['logout', 'changePassword']),
 		changeFIO(){
 			let firstname = document.getElementById('firstname').value;
 			let lastname = document.getElementById('lastname').value;
 			let secondname = document.getElementById('secondname').value;
-			this.updateProfile({"firstName": firstname, "lastName": lastname, "patronymic": secondname})
+			this.profile.user.firstName = firstname;
+			this.profile.user.lastName = lastname;
+			this.profile.user.patronymic = secondname;
+			
+			this.updateProfile(this.profile.user)
 				.then(updatedProfile => {
 					this.FIO_show = false;
 				})
@@ -188,7 +220,8 @@
 		},
 		changephoneNumber(){
 			let phoneNumber = document.getElementById('phonenumber').value;
-			this.updateProfile({phoneNumber})
+			this.profile.user.phoneNumber = phoneNumber;
+			this.updateProfile(this.profile.user)
 				.then(updatedProfile => {
 					this.Phone_show = false;
 					/*
@@ -204,7 +237,8 @@
 		},
 		changeEmail(){
 			let email = document.getElementById('email').value;
-			this.updateProfile({email})
+			this.profile.user.email = email;
+			this.updateProfile(this.profile.user)
 				.then(
 					() => {
 						this.Email_show = false;
@@ -213,11 +247,36 @@
 		},
 		changeAddress(){
 			let address = document.getElementById('address').value;
-			this.updateProfile({address})
+			this.profile.user.address = address;
+			this.updateProfile(this.profile.user)
 				.then(
 					() => {
 						this.Address_show = false;
 					}
+				)
+		},
+		cancelPasswordChange(){
+			this.Password_show=!this.Password_show;
+			this.passwords.oldPassword = '';
+			this.passwords.newPassword = '';
+			this.passwords.newPasswordRepeat = '';
+		},
+		changePasswordHandler(){
+			let auth = {
+				  "newPassword": this.passwords.newPassword,
+				  "newPasswordConfirm": this.passwords.newPasswordRepeat,
+				  "oldPassword": this.passwords.oldPassword,
+				  "username": this.profile.user.username
+				}
+			this.Password_show = !this.Password_show;
+			this.changePassword(auth)
+				.then(
+					() => {
+							this.logout()
+								.then(
+									() => this.$router.push({ name: 'home' })
+								)
+						}
 				)
 		},
 		updateProfile(newProfile){
