@@ -358,6 +358,7 @@ header{
 	font-size: 18px;
 	line-height: 22px;
 	margin: 13px 0 0 0;
+	word-break: break-all;
 }
 .card_news__date{
 	flex-direction: column;
