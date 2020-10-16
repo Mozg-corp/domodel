@@ -34,6 +34,18 @@
 			<div class="claim_row r-flex">
 				<div >
 					<p class="row_header">
+						Телефон:
+					</p>
+				</div>
+				<div>
+					<p class="row_content">
+						{{singleClaim.phoneNumber}}
+					</p>
+				</div>
+			</div>
+			<div class="claim_row r-flex">
+				<div >
+					<p class="row_header">
 						Текст:
 					</p>
 				</div>
