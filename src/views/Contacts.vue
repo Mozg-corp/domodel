@@ -3,14 +3,14 @@
 		<div class="container">
 			<div class="contacts_container">
 				<h1>
-					{{requisites.companyName}} <a href="#" v-show="!editable&&isAdmin" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="editable=!editable">Отменить</a>
+					{{requisites.companyName}} <a href="#" v-show="!editable&&isAdmin" @click.prevent="editable=!editable">Редактировать</a> <a href="#" v-show="editable" @click.prevent="cancelHandler">Завершить</a>
 				</h1>
 				<form name="contacts" method="post" action="#">
 					<section class="contacts_section">
 						<h2 class="contact_header">
 							Контакты
 						</h2>
-						<ContactItem v-for="item in contact" :key="item.id" :title="item.title" :text="item.text" :disabled="!editable"/>
+						<ContactItem v-for="item in contact" :key="item.id" :title="item.title" :text="item.text" :id="item.id" :disabled="!editable"/>
 						<article>
 							<div class="contact r-flex">
 								<input :disabled="!addField" type="text" v-model="title" placeholder="Название поля" class="field_name"/>
@@ -122,6 +122,12 @@
 					})
 					.catch(e=> console.log(e))
 			},
+			cancelHandler(){
+				this.editable=!this.editable;
+				this.addField = false;
+				this.title = "";
+				this.text = "";
+			},
 			...mapActions(['fetchContact', 'createNewContactField', 'fetchRequisites'])		
 		},
 		mounted(){
@@ -134,7 +140,7 @@
 				)
 			this.fetchRequisites()
 				.then(
-					//(r)=>console.log(r)
+					(r)=>console.log(r)
 				).catch(
 					e=> console.log(e)
 				)

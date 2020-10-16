@@ -69,5 +69,9 @@ export default {
 	},
 	ADD_NEW_COUNTER: (state, counter) => {
 		state.meters = [...state.meters, counter]
+	},
+	UPDATE_CONTACT_FIELD: (state, updatedField) => {
+		let fieldIndex = state.contact.findIndex(el=>el.id === updatedField.id);
+		state.contact[fieldIndex] = updatedField
 	}
 }

@@ -22,7 +22,7 @@ export default {
 						localStorage.setItem('user-username', username);
 						// console.log(`Bearer_${token}`);
 						let adminRole = data.roles.findIndex((el)=>{
-							console.log(el.authority ===  "ROLE_ADMIN")
+							//console.log(el.authority ===  "ROLE_ADMIN")
 								return  el.authority ===  "ROLE_ADMIN";
 							});
 						let isAdmin =  adminRole !== -1;
@@ -296,7 +296,7 @@ export default {
 					method: 'get',
 					url: '/api/v1/management/requisites'
 				})
-				// console.log(response)
+				console.log(response)
 				if(response.status === 200){
 					let requisites = response.data;
 					commit('SET_REQUISITES', requisites);
@@ -450,6 +450,41 @@ export default {
 					resolve(meter);
 				}else{
 					reject(response);
+				}
+			}
+		)
+	},
+	changePassword: ({commit, dispatch}, auth) => {
+		//console.log(auth);
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: '/api/v1/profile/update/password',
+					data: auth
+				})
+				if(response.status === 200){
+					resolve()
+				}else{
+					reject(response)
+				}
+			}
+		)
+	},
+	changeContactField: ({commit, dispatch}, field) => {
+		return new Promise(
+			async (resolve, reject) => {
+				let response = await axios({
+					method: 'post',
+					url: `/api/v1/information/contacts/${field.id}`,
+					data: field
+				})
+				if(response.status === 200){
+					let updatedField = response.data;
+					commit('UPDATE_CONTACT_FIELD', updatedField);
+					resolve(updatedField)
+				}else{
+					reject(response)
 				}
 			}
 		)
