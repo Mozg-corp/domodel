@@ -94,6 +94,7 @@
 					</select>
 				</div>
 			</div>
+			<a href="#" @click.prevent="$router.go(-1)">Назад</a>
 		</div>
 	</div>
 </template>
@@ -108,7 +109,13 @@
 		props: ['id'],
 		data: ()=>({
 			loading: false,
-			singleClaim: {},
+			singleClaim: {
+				authorName: {
+					lastname: '',
+					firstName: '',
+					patronymic: ''
+				}
+			},
 			editing: false,
 			statuses: [
 				'Направлено',

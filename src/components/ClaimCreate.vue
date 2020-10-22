@@ -63,7 +63,7 @@
 					</input>
 				</div>
 			</div>
-			<a :class="isEmpty" @click.prevent="sendClaimHandler" >
+			<a :class="{ 'send_claim': true, 'empty': isEmpty}" @click.prevent="sendClaimHandler" >
 				Отправить
 			</a>
 		</div>
@@ -82,19 +82,19 @@
 		}),
 		computed: {
 			isEmpty(){
-				return this.claim.title.length < 5 || this.claim.text.length < 5 || this.claim.phoneNumber === '' ? 'send_claim empty' : 'send_claim '
+				return this.claim.title.length < 5 || this.claim.text.length < 5 || this.claim.phoneNumber === ''
 			}
 		},
 		methods: {
 			sendClaimHandler(){
 				if(!this.isEmpty){
 					this.createClaim(this.claim)
-					.then(
-						()=>this.$router.go(-1)
-					)
-					.catch(
-						e => alert(e.response.data.message)
-					)
+						.then(
+							()=>this.$router.go(-1)
+						)
+						.catch(
+							e => alert(e.response.data.message)
+						)
 				}
 			},
 			...mapActions(['createClaim'])

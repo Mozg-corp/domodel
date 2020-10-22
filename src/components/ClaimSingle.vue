@@ -67,6 +67,7 @@
 					</p>
 				</div>
 			</div>
+			<a href="#" @click.prevent="$router.go(-1)"> Назад </a>
 		</div>
 	</div>
 </template>
@@ -77,7 +78,13 @@
 		props: ['id'],
 		data: ()=>({
 			loading: false,
-			singleClaim: {}
+			singleClaim: {
+				test: '',
+				title: '',
+				status: '',
+				photoLinks: '',
+				creationDate: ''
+			}
 		}),
 		computed: {
 			status: function(){
@@ -102,10 +109,10 @@
 					.then(
 						claims => {
 							this.loading = false;
+							this. singleClaim = this.getClaim(+this.id);
 						}
 					)
 			}
-			this. singleClaim = this.getClaim(+this.id);
 		},
 	}
 </script>

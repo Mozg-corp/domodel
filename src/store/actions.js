@@ -229,7 +229,7 @@ export default {
 			async (resolve,reject) => {
 				let response;
 				try{
-					let response = await axios({
+					response = await axios({
 						method: 'post',
 						url: '/api/v1/appeals',
 						data: newClaim
@@ -237,7 +237,6 @@ export default {
 				}catch(e){
 					reject(e);
 				}
-				console.log(response);
 				if(response.status === 200){
 					resolve();
 				}else{
