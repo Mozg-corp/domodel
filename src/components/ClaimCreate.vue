@@ -63,7 +63,7 @@
 					</input>
 				</div>
 			</div>
-			<a href="#" class="send_claim" @click.prevent="sendClaimHandler">
+			<a :class="isEmpty" @click.prevent="sendClaimHandler" >
 				Отправить
 			</a>
 		</div>
@@ -80,12 +80,22 @@
 				phoneNumber: ""
 			}
 		}),
+		computed: {
+			isEmpty(){
+				return this.claim.title.length < 5 || this.claim.text.length < 5 || this.claim.phoneNumber === '' ? 'send_claim empty' : 'send_claim '
+			}
+		},
 		methods: {
 			sendClaimHandler(){
-				this.createClaim(this.claim)
+				if(!this.isEmpty){
+					this.createClaim(this.claim)
 					.then(
 						()=>this.$router.go(-1)
 					)
+					.catch(
+						e => alert(e.response.data.message)
+					)
+				}
 			},
 			...mapActions(['createClaim'])
 		}
@@ -129,4 +139,7 @@
 		border-radius: 10px
 		padding: 8px 120px
 		margin: 48px auto
+	.empty
+		cursor: not-allowed
+		color: gray
 </style>
