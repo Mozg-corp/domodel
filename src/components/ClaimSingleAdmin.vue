@@ -34,6 +34,19 @@
 			<div class="claim_row r-flex">
 				<div >
 					<p class="row_header">
+						ФИО:
+					</p>
+				</div>
+				<div>
+					<p class="row_content linkable" @click.prevent="$router.push({name: 'cityzen profile', params: {id: singleClaim.authorId}})">
+						
+						{{singleClaim.authorName.lastname}} {{singleClaim.firstName}} {{singleClaim.authorName.patronymic}}
+					</p>
+				</div>
+			</div>
+			<div class="claim_row r-flex">
+				<div >
+					<p class="row_header">
 						Телефон:
 					</p>
 				</div>
@@ -86,11 +99,11 @@
 </template>
 <script>
 	import {mapGetters, mapState, mapActions} from 'vuex';
-	import vSelect from 'vue-select';
+	//import vSelect from 'vue-select';
 	export default{
 		name: 'ClaimSingleAdmin',
 		components: {
-			vSelect
+			//vSelect
 		},
 		props: ['id'],
 		data: ()=>({
@@ -131,13 +144,19 @@
 				.then(
 					claims => {
 						this.loading = false;
+						this. singleClaim = this.getClaim(+this.id);
 					}
 				)
-			this. singleClaim = this.getClaim(+this.id);
 		},
 	}
 </script>
 <style scoped lang="sass">
+	.linkable
+		text-decoration: underline
+		color: blue
+	.linkable:hover
+		cursor: pointer
+		color: red
 	.claims
 		width: 100%
 	.claim_container
