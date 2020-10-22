@@ -81,12 +81,12 @@
 					</a>
 				</p>
 				<h2>
-					Фамилия и Имя
+					Имя, Отчество, Фамилия
 				</h2>
 				<form name="profile_fio" id="profile_form" action="#" method="post" class="r-flex">
-					<input type="text" id="firstname" name="firstname" :value="profile.user.firstName"/>
-					<input type="text" id="secondname" name="secondname" :value="profile.user.patronymic"/>
-					<input type="text" id="lastname" name="lastname" :value="profile.user.lastName"/>
+					<input type="text" placeholder="Имя" id="firstname" name="firstname" :value="profile.user.firstName"/>
+					<input type="text" placeholder="Отчество" id="secondname" name="secondname" :value="profile.user.patronymic"/>
+					<input type="text" placeholder="Фамилия" id="lastname" name="lastname" :value="profile.user.lastName"/>
 					<div class="login_controls r-flex">
 						<input type="button" name="cancel" id="cancel_fio" @click.prevent="FIO_show=!FIO_show" value="Отменить"></input>
 						<input type="submit" name="submit" id="submit_fio" value="Сохранить" @click.prevent="changeFIO"></input>
