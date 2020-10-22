@@ -1,5 +1,5 @@
 <template>
-	<div class="cityzens_box__item r-flex">
+	<div class="cityzens_box__item r-flex" @click.prevent="$router.push({name: 'cityzen profile', params: {id: cityzen.id} })">
 		<div class="cityzen_item__col1">
 			<p>
 				{{cityzen.address}}
@@ -12,7 +12,7 @@
 		</div>
 		<div class="cityzen_item__col4">
 			<p >
-				{{cityzen.phoneNumber}} / <router-link :to="{name: 'cityzen profile', params: {id: cityzen.id} }" class="cityzen_item__col4">{{cityzen.username}}</router-link>
+				{{cityzen.phoneNumber}} / {{cityzen.username}}
 			</p>
 		</div>
 	</div><!--cityzen_box_item-->
@@ -26,4 +26,8 @@
 	}
 </script>
 <style scoped lang="sass">
+	.cityzens_box__item:hover
+		background-color: grey
+		opacity: 0.5
+		color: white
 </style>

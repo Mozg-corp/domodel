@@ -1,5 +1,5 @@
 <template>
-	<div class="claims_box__item r-flex">
+	<div class="claims_box__item r-flex" @click.prevent="$router.push({name: 'single claim admin', params: {id: claim.id} })">
 		<div class="claim_item__col1">
 			<p>
 				{{claim.creationDate}}
@@ -10,8 +10,6 @@
 				{{claim.id}}
 			</p>
 		</div><div class="claim_item__col3">
-			<router-link :to="{name: 'single claim admin', params: {id: claim.id} }">
-				{{claim.title}}
 			</router-link>
 		</div>
 		<div class="claim_item__col4">
@@ -39,6 +37,10 @@
 	}
 </script>
 <style scoped lang="sass">
+	.claims_box__item:hover
+		background-color: grey
+		opacity: 0.5
+		color: white
 	a
 		font-size: 18px
 		line-height: 22px
