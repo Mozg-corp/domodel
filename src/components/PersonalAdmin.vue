@@ -82,7 +82,13 @@
 	  methods: {
 		...mapActions(['fetchUser', 'updateUser']),
 		saveHandler(){
-			this.updateUser(this.profileLocal);
+		//console.log('save');
+			this.updateUser(this.profileLocal)
+				.then(
+					user => {
+						this.disabled = true;
+					}
+				)
 		},
 		cancelHandler(){
 			this.disabled = !this.disabled;
