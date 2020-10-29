@@ -33,10 +33,17 @@
 					</select>
 				</div>
 			</div><!--claim_box_item-->
-			<div  v-if="orderer">
-				<ClaimItem v-for="claim in orderer.order({'status': statusFilter})" :key="claim.id" :claim="claim"/>
+			<div  v-if="orderer&&paginator">
+				<ClaimItem v-for="claim in paginatedClaimsWithStatus" :key="claim.id" :claim="claim"/>
 			</div>
 		</div><!--claim_box-->
+		<div>
+			<div v-if="paginator&&paginator.getPagesNumber()>1">
+				<a href="#" v-for="page in paginator.getPaginationArray(currentPage)" @click.prevent="currentPage=page">
+					{{page}}
+				</a>
+			</div>
+		</div>
 		<div class="sendClaim_container">
 			<router-link href="#" class="sendClaim" :to="{name: 'CreateClaim'}">
 				Подать новое обращение
@@ -49,6 +56,7 @@
 	import ClaimItem from '@/components/ClaimItem';
 	
 	import {ClaimsOrderer} from '@/utiles/claimsorderer';
+	import {Pagination} from '@/utiles/pagination';
 	
 	export default{
 		name: 'Claims',
@@ -66,10 +74,19 @@
 				'Получено'
 			],
 			orderer: null,
-			statusFilter: 'Все'
+			statusFilter: 'Все',
+			paginator: null,
+			currentPage: 1
 		}),
 		computed: {
-			...mapState(['claims'])
+			...mapState(['claims']),
+			paginatedClaimsWithStatus(){
+				let res = [];
+				res = this.orderer.order({'status': this.statusFilter});
+				this.paginator.setArray(res);
+				
+				return this.paginator.getPage(this.currentPage);
+			}
 		},
 		methods: {
 			...mapActions(['fetchClaims']),
@@ -84,6 +101,7 @@
 					claims => {
 						this.loading = false;
 						this.orderer = new ClaimsOrderer(claims)
+						this.paginator = new Pagination(claims);
 						//console.log(this.orderer.orderByStatus(this.statusFilter))
 						//console.log(this.orderer)
 					}

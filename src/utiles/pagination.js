@@ -3,23 +3,27 @@ const Pagination = class{
 		this.array = array;
 		this.perPage = limit;
 	}
+	setArray(array){
+		this.array = array;
+	}
 	getTotal(){
 		return this.array.length;
 	}
 	getPagesNumber(){
-		let number = this.getTotal() % this.perPage;
-		return ++number;
+		return Math.ceil(this.getTotal() / this.perPage);
 	}
 	getPaginationArray(currentPage){
 		let paginationArray = [];
 		paginationArray.push(1);
 		let pagesNumber = this.getPagesNumber();
 		for(let i=2; i<pagesNumber;++i){
-			if(i>currentPage-2 || i<currentPage+2 || i>pagesNumber-2){
+			if(i>currentPage-2 && i<currentPage+2 || i>pagesNumber-2){
 				paginationArray.push(i);
 			}
 		}
-		paginationArray.push(pagesNumber);
+		if(pagesNumber>1){
+			paginationArray.push(pagesNumber)
+		}
 		return paginationArray;
 	}
 	getPage(pageNumber){
