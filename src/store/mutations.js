@@ -73,5 +73,8 @@ export default {
 	UPDATE_CONTACT_FIELD: (state, updatedField) => {
 		let fieldIndex = state.contact.findIndex(el=>el.id === updatedField.id);
 		state.contact[fieldIndex] = updatedField
+	},
+	UPDATE_REQUISITES: (state, updatedRequisites) => {
+		state.requisites = updatedRequisites
 	}
 }

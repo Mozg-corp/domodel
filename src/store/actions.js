@@ -493,5 +493,27 @@ export default {
 				}
 			}
 		)
+	},
+	changeRequisites: ({commit} , requisites) => {
+		return new Promise(
+			async (resolve, reject) => {
+				try{
+					let response = await axios({
+						method: 'post',
+						url: '/api/v1/management/requisites',
+						data: requisites
+					})
+					if(response.status === 200){
+						let updatedRequisites = response.data;
+						commit('UPDATE_REQUISITES', updatedRequisites);
+						resolve(updatedRequisites)
+					}else{
+						reject(response)
+					}
+				}catch(e){
+					reject(e.response);
+				}
+			}
+		)
 	}
 }
