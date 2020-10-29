@@ -26,9 +26,16 @@
 					<p>
 						Статус:
 					</p>
+					<select @change="selectStatusHandler($event)">
+						<option v-for="(status, i) in statuses" :key="i">
+							{{status}}
+						</option>
+					</select>
 				</div>
 			</div><!--claim_box_item-->
-			<ClaimItem v-for="claim in claims" :key="claim.id" :claim="claim"/>
+			<div  v-if="orderer">
+				<ClaimItem v-for="claim in orderer.order({'status': statusFilter})" :key="claim.id" :claim="claim"/>
+			</div>
 		</div><!--claim_box-->
 		<div class="sendClaim_container">
 			<router-link href="#" class="sendClaim" :to="{name: 'CreateClaim'}">
@@ -40,19 +47,35 @@
 <script>
 	import {mapActions, mapState} from 'vuex';
 	import ClaimItem from '@/components/ClaimItem';
+	
+	import {ClaimsOrderer} from '@/utiles/claimsorderer';
+	
 	export default{
 		name: 'Claims',
 		components: {
 			ClaimItem
 		},
 		data: ()=>({
-			loading: false
+			loading: false,
+			statuses: [
+				'Все',
+				'Направлено',
+				'В работе',
+				'Отменено',
+				'Выполнено',
+				'Получено'
+			],
+			orderer: null,
+			statusFilter: 'Все'
 		}),
 		computed: {
 			...mapState(['claims'])
 		},
 		methods: {
-			...mapActions(['fetchClaims'])
+			...mapActions(['fetchClaims']),
+			selectStatusHandler($event){
+				this.statusFilter = $event.target.value
+			}
 		},
 		mounted(){
 		this.loading = true;
@@ -60,7 +83,9 @@
 				.then(
 					claims => {
 						this.loading = false;
-						console.log(claims)
+						this.orderer = new ClaimsOrderer(claims)
+						//console.log(this.orderer.orderByStatus(this.statusFilter))
+						//console.log(this.orderer)
 					}
 				)
 		}

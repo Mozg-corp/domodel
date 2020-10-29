@@ -100,8 +100,6 @@
 	}
 </script>
 <style scoped lang="sass">
-	.contact__text
-		margin-left: 10px
 	form label
 		min-width: 170px
 	.field_value

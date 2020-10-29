@@ -676,6 +676,7 @@ form[name="contacts"] label{
 	color: #000000;
 	flex-basis: 50px;
 }
+
 .contact_header, .requisites_header{
 	font-weight: 500;
 	font-size: 20px;
