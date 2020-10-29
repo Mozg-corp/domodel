@@ -56,6 +56,7 @@
 		background-color: -internal-light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))
 	input, textarea
 		background-color: rgba(239, 239, 239, 0.3)
+		margin-left: 10px
 	input:disabled, textarea:disabled
 		border: 1px solid #FFF
 		background-color:  #FFF

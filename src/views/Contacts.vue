@@ -23,63 +23,7 @@
 						<h2 class="requisites_header">
 							Реквизиты
 						</h2>
-						<article>
-							<h3 class="company_name">
-								{{requisites.companyName}} 
-							</h3>
-							<div class="requisites_details  r-flex">
-								
-								<label for="inn" class="inn">
-									ИНН:
-								</label>
-								<input :disabled="!editable" type="number" name="inn" :value="requisites.inn"/>
-							</div>
-						</article>
-						<article>
-							<div class="requisites_details  r-flex">
-								
-								<label for="kpp" class="kpp">
-									КПП:
-								</label>
-								<input :disabled="!editable" type="number" name="kpp" :value="requisites.kpp">
-							</div>
-						</article>
-						<article>
-							<div class="requisites_details  r-flex">
-								
-								<label for="ogrn" class="ogrn">
-									ОГРН:
-								</label>
-								<input :disabled="!editable" type="number" name="ogrn" :value="requisites.ogrn"/>
-							</div>
-						</article>
-						<article>
-							<div class="requisites_details  r-flex">
-								
-								<label for="account" class="account">
-									Р/С:
-								</label>
-								<input :disabled="!editable" type="number" name="account" :value="requisites.bankAccount"/>
-							</div>
-						</article>
-						<article>
-							<div class="requisites_details  r-flex">
-								
-								<label for="kc" class="kc">
-									К/С:
-								</label>
-								<input :disabled="!editable" type="number" name="kc" :value="requisites.correspondentAccount"/>
-							</div>
-						</article>
-						<article>
-							<div class="requisites_details r-flex">
-								
-								<label for="bic" class="bic">
-									БИК:
-								</label>
-								<input :disabled="!editable" type="number" name="bic" :value="requisites.bik"/>
-							</div>
-						</article>
+						<RequisitesItem v-for="[name, value] in Object.entries(requisites)" :key="name" :name="name" :value="value" :disabled="!editable"/>
 					</section>
 				</form>
 			</div><!--contacts_container-->
@@ -89,9 +33,13 @@
 <script>
 	import {mapActions, mapState, mapGetters} from 'vuex';
 	import ContactItem from '@/components/ContactItem.vue';
+	import RequisitesItem from '@/components/RequisitesItem.vue';
 	export default{
 		name: "Contacts",
-		components: {ContactItem},
+		components: {
+			ContactItem,
+			RequisitesItem
+			},
 		data: ()=>({
 			editable: false,
 			loading: false,
@@ -140,7 +88,9 @@
 				)
 			this.fetchRequisites()
 				.then(
-					(r)=>console.log(r)
+					(r)=>{
+						console.log(Object.entries(r))
+					}
 				).catch(
 					e=> console.log(e)
 				)
@@ -150,6 +100,8 @@
 	}
 </script>
 <style scoped lang="sass">
+	.contact__text
+		margin-left: 10px
 	form label
 		min-width: 170px
 	.field_value

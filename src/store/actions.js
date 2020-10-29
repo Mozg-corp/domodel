@@ -503,6 +503,7 @@ export default {
 						url: '/api/v1/management/requisites',
 						data: requisites
 					})
+					console.log(response)
 					if(response.status === 200){
 						let updatedRequisites = response.data;
 						commit('UPDATE_REQUISITES', updatedRequisites);
