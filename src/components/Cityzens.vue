@@ -24,20 +24,33 @@
 					</p>
 				</div>
 			</div><!--cityzen_box_item-->
-			<CityzenItem v-for="cityzen in cityzens" :key="cityzen.id" :cityzen="cityzen"/>
+			<div v-if="paginator">
+				<CityzenItem v-for="cityzen in paginator.getPage(currentPage)" :key="cityzen.id" :cityzen="cityzen"/>
+			</div>
 		</div><!--cityzen_box-->
+		<div>
+			<div v-if="paginator">
+				<a href="#" v-for="page in paginator.getPaginationArray(currentPage)" @click.prevent="currentPage=page">
+					{{page}}
+				</a>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
 	import {mapActions, mapState} from 'vuex';
 	import CityzenItem from '@/components/CityzenItem';
+	import {Pagination} from '@/utiles/pagination';
 	export default{
 		name: 'Cityzens',
 		components: {
 			CityzenItem
 		},
 		data: ()=>({
-			loading: false
+			loading: false,
+			paginator: null,
+			currentPage: 1
+			
 		}),
 		computed: {
 			...mapState(['cityzens'])
@@ -46,14 +59,15 @@
 			...mapActions(['fetchCityzens'])
 		},
 		mounted(){
-		this.loading = true;
-		this.fetchCityzens()
-				.then(
-					cityzens => {
-						this.loading = false;
-						console.log(cityzens)
-					}
-				)
+			this.loading = true;
+			this.fetchCityzens()
+					.then(
+						cityzens => {
+							this.loading = false;
+							this.paginator = new Pagination(cityzens);
+							//console.log(this.paginator.getPage(1))
+						}
+					)
 		}
 	}
 </script>
