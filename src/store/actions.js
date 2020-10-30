@@ -516,5 +516,25 @@ export default {
 				}
 			}
 		)
+	},
+	fetchPayments: ({commit}) => {
+		return new Promise(
+			async (resolve, reject) => {
+				try{
+					let response = await axios({
+						method: 'get',
+						url: '/api/v1/bills'
+					})
+					if(response && response.status === 200){
+						let payments = response.data;
+						console.log(payments);
+						commit('SET_PAYMENTS', payments)
+						resolve(payments);
+					}
+				}catch(e){
+					reject(e.response)
+				}
+			}
+		)
 	}
 }

@@ -27,6 +27,7 @@
 								<router-link class="cabinet__link" :to="{name: 'personal'}">Профиль</router-link>
 								<router-link class="cabinet__link" :to="{name: 'claims'}" data-id="meters">Обращения</router-link>
 								<router-link class="cabinet__link" :to="{name: 'counter'}">Показания <br/>приборов учета</router-link>
+								<router-link class="cabinet__link" :to="{name: 'personal payments list'}">Счета и взносы</router-link>
 							</div>
 						</article>
 					</section>

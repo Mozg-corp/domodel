@@ -54,5 +54,6 @@ export default{
 	claims: [],
 	meters: [],
 	singleMeter: {},
-	singleMeterAllIndications: []
+	singleMeterAllIndications: [],
+	payments: []
 }

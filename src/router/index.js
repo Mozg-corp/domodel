@@ -57,6 +57,12 @@ const routes = [
 				path: 'createClaim',
 				name: 'CreateClaim',
 				component: ()=>import(/*webpackChunkName: 'Create Claim'*/ '@/components/ClaimCreate.vue')
+			},
+			{
+				path: 'payments',
+				name: 'personal payments list',
+				beforeEnter: ifNotAdmin,
+				component: ()=>import(/*webpackChunkName: 'personal payments list'*/ '@/components/Payments.vue')
 			}
 		]
     },
@@ -106,26 +112,26 @@ const routes = [
 				path: 'payments',
 				name: 'payments list',
 				beforeEnter: ifNotAdmin,
-				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/Payments.vue')
+				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/PaymentsAdmin.vue')
 			},
 			{
 				path: 'claims',
 				name: 'claims list',
 				beforeEnter: ifNotAdmin,
-				component: ()=>import(/*webpackChunkName: 'all meters list'*/ '@/components/ClaimsAdmin.vue')
+				component: ()=>import(/*webpackChunkName: 'all claims list'*/ '@/components/ClaimsAdmin.vue')
 			},
 			{
 				path: 'claims/:id',
 				name: 'single claim admin',
 				props: true,
 				beforeEnter: ifNotAdmin,
-				component: ()=>import(/*webpackChunkName: "Profile Claims"*/ '@/components/ClaimSingleAdmin')
+				component: ()=>import(/*webpackChunkName: "Personal Claims Admin"*/ '@/components/ClaimSingleAdmin')
 			},
 			{
 				path: 'votes',
 				name: 'votes list',
 				beforeEnter: ifNotAdmin,
-				component: ()=>import(/*webpackChunkName: "Profile Claims"*/ '@/components/VotesList')
+				component: ()=>import(/*webpackChunkName: "All Votes List"*/ '@/components/VotesList')
 			}
 		]
 	}

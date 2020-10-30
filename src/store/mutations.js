@@ -76,5 +76,8 @@ export default {
 	},
 	UPDATE_REQUISITES: (state, updatedRequisites) => {
 		state.requisites = updatedRequisites
+	},
+	SET_PAYMENTS: (state, payments) => {
+		state.payments = payments
 	}
 }
